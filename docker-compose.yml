@@ -24,8 +24,9 @@ services:
         - DOCKER_UID=${DOCKER_UID:-1000}
         - DOCKER_GID=${DOCKER_GID:-100}
     environment:
-      RAILS_RELATIVE_URL_ROOT: /
-      ORIGINAL_SCRIPT_NAME: /
+      RAILS_RELATIVE_URL_ROOT: /ui
+      ORIGINAL_SCRIPT_NAME: /ui
+      RAILS_SERVE_STATIC_FILES: "true"
     logging:
       options:
         max-size: "1m"
@@ -36,10 +37,10 @@ services:
     - ui_log:/app/log
     - ui_tmp:/app/tmp
     ports:
-      - "3000"
+      - "3000:3000"
     networks:
       - backend
-    command: ["rails", "server", "--port", "3000"]
+    entrypoint: ["sleep", "infinity"]
 
   db:
     image: postgres:13.2
