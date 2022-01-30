@@ -1,0 +1,82 @@
+version: '3.3'
+
+services:
+  nginx:
+    image: nginx:1.19.9
+    container_name: nginx
+    volumes:
+     - ./nginx-service/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "127.0.0.1:${NGINX_PORT}:8080"
+    depends_on:
+      - host
+    command: ['nginx', '-g', 'daemon off;']
+
+  host:
+    container_name: host
+    build:
+      context: ./host-service
+      dockerfile: Dockerfile.production
+      args:
+        - DOCKER_UID=${DOCKER_UID:-1000}
+        - DOCKER_GID=${DOCKER_GID:-100}
+    environment:
+      RAILS_RELATIVE_URL_ROOT: /
+      ORIGINAL_SCRIPT_NAME: /
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "2"
+    working_dir: /app
+    volumes:
+    - ui_bundle:/bundle
+    - ui_log:/app/log
+    - ui_tmp:/app/tmp
+    ports:
+      - "3000"
+    networks:
+      - backend
+    command: ["rails", "server", "--port", "3000"]
+
+  db:
+    image: postgres:13.2
+    container_name: db
+    restart: always
+    environment:
+      PGDATA: /data/db
+      POSTGRES_DB: production
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "2"
+    volumes:
+    - postgres_data:/data
+    networks:
+      - backend
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    profiles: ["dev"]
+    restart: always
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "2"
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  postgres_data:
+  ui_data:
+  ui_bundle:
+  ui_assets:
+  ui_tmp:
+  ui_log:

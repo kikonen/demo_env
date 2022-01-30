@@ -1,0 +1,3 @@
+[submodule "host-service"]
+	path = host-service
+	url = git@github.com:kikonen/host.git

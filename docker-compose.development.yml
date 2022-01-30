@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  host:
+    environment:
+      RAILS_ENV: dewvelopment
+    ports:
+      - "3000"
+    volumes:
+    - ./host-service:/app
+
+  db:
+    ports:
+      - "5432"
+
+  adminer:
+    ports:
+      - "8080"

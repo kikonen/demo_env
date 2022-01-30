@@ -1,0 +1,4 @@
+services:
+  nginx:
+    image: docker.ikari.fi/host_ui:1.0
+    command: ['nginx', '-g', 'daemon off;']
