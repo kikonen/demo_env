@@ -2,12 +2,22 @@ version: '3.3'
 
 services:
   host:
+    build:
+      dockerfile: Dockerfile.development
     environment:
       RAILS_ENV: dewvelopment
+      RAILS_RELATIVE_URL_ROOT: /ui
+      ORIGINAL_SCRIPT_NAME: /ui
     ports:
       - "3000"
     volumes:
+    volumes:
     - ./host-service:/app
+    - ui_assets:/assets
+    - ui_bundle:/bundle
+    entrypoint: ["sleep", "infinity"]
+    ports:
+      - "3000"
 
   db:
     ports:
@@ -16,3 +26,7 @@ services:
   adminer:
     ports:
       - "8080"
+
+volumes:
+  ui_assets:
+  ui_bundle:

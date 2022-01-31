@@ -19,28 +19,19 @@ services:
     container_name: host
     build:
       context: ./host-service
-      dockerfile: Dockerfile.production
       args:
-        - DOCKER_UID=${DOCKER_UID:-1000}
-        - DOCKER_GID=${DOCKER_GID:-100}
-    environment:
-      RAILS_RELATIVE_URL_ROOT: /ui
-      ORIGINAL_SCRIPT_NAME: /ui
-      RAILS_SERVE_STATIC_FILES: "true"
+        - DOCKER_UID=${DOCKER_UID:-www-data}
+        - DOCKER_GID=${DOCKER_GID:-www-data}
     logging:
       options:
         max-size: "1m"
         max-file: "2"
     working_dir: /app
     volumes:
-    - ui_bundle:/bundle
     - ui_log:/app/log
     - ui_tmp:/app/tmp
-    ports:
-      - "3000:3000"
     networks:
       - backend
-    entrypoint: ["sleep", "infinity"]
 
   db:
     image: postgres:13.2
@@ -76,8 +67,5 @@ networks:
 
 volumes:
   postgres_data:
-  ui_data:
-  ui_bundle:
-  ui_assets:
-  ui_tmp:
   ui_log:
+  ui_tmp:

@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  host:
+    build:
+      dockerfile: Dockerfile.production
+    environment:
+      RAILS_SERVE_STATIC_FILES: "true"
+    entrypoint: ["sleep", "infinity"]
