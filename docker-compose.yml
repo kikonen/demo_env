@@ -4,6 +4,8 @@ services:
   nginx:
     image: nginx:1.19.9
     container_name: nginx
+    env_file:
+      - .env
     volumes:
      - ./nginx-service/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
     networks:
@@ -11,35 +13,40 @@ services:
       - backend
     ports:
       - "127.0.0.1:${NGINX_PORT}:8080"
-    depends_on:
-      - host
     command: ['nginx', '-g', 'daemon off;']
 
   host:
     container_name: host
     build:
-      context: ./host-service
+      context: ./projects/host
       args:
-        - DOCKER_UID=${DOCKER_UID:-www-data}
-        - DOCKER_GID=${DOCKER_GID:-www-data}
+        - DOCKER_UID=${DOCKER_UID:-1000}
+        - DOCKER_GID=${DOCKER_GID:-100}
+    env_file:
+      - .env
+    environment:
+      SERVER_MODE: $SERVER_MODE
     logging:
       options:
         max-size: "1m"
         max-file: "2"
     working_dir: /app
     volumes:
-    - ui_log:/app/log
-    - ui_tmp:/app/tmp
+    - host_log:/app/log
+    - host_tmp:/app/tmp
     networks:
       - backend
+    depends_on:
+      - db
+      - nginx
 
   db:
     image: postgres:13.2
     container_name: db
-    restart: always
+    env_file:
+      - .env
     environment:
       PGDATA: /data/db
-      POSTGRES_DB: production
     logging:
       options:
         max-size: "1m"
@@ -67,5 +74,5 @@ networks:
 
 volumes:
   postgres_data:
-  ui_log:
-  ui_tmp:
+  host_log:
+  host_tmp:

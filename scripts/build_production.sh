@@ -1,1 +1,1 @@
-docker-compose -f docker-compose.yml -f docker-compose.build.yml build --no-cache
+time docker-compose -f docker-compose.yml -f docker-compose.build.yml build

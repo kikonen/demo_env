@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  host:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "3000"
+    volumes:
+    volumes:
+    - ./projects/host:/app
+    - host_assets:/assets
+    - host_bundle:/bundle
+    - host_node_modules:/node_modules
+    ports:
+      - "3000"
+
+  db:
+    ports:
+      - "5432"
+
+  adminer:
+    ports:
+      - "8080"
+
+volumes:
+  host_assets:
+  host_bundle:
+  host_node_modules:

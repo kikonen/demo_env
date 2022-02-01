@@ -3,7 +3,11 @@ version: '3.3'
 services:
   host:
     build:
-      dockerfile: Dockerfile.production
+      dockerfile: Dockerfile.build
     environment:
       RAILS_SERVE_STATIC_FILES: "true"
     entrypoint: ["sleep", "infinity"]
+
+  db:
+    environment:
+      POSTGRES_DB: production

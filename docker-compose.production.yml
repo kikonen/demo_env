@@ -1,4 +1,7 @@
 services:
-  nginx:
-    image: docker.ikari.fi/host_ui:1.0
-    command: ['nginx', '-g', 'daemon off;']
+  host:
+    image: docker.ikari.fi/host:1.0
+
+  db:
+    environment:
+      POSTGRES_DB: production
