@@ -24,3 +24,5 @@ Experimenting with strategies with building and deploying rails app as container
 - https://medium.com/magnetis-backstage/how-to-cache-bundle-install-with-docker-7bed453a5800
 - https://stackoverflow.com/questions/62070585/how-to-install-new-gems-in-a-rails-docker-image-without-rebuilding-it
 - https://dev.to/k_penguin_sato/cache-rails-gems-using-docker-compose-3o3f
+- https://github.com/sass/sassc-ruby/issues/189
+- https://dev.to/kolide/how-to-migrate-a-rails-6-app-from-sass-rails-to-cssbundling-rails-4l41
