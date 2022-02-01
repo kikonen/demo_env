@@ -3,6 +3,7 @@ version: '3.3'
 services:
   host:
     build:
+      context: ./projects/host
       dockerfile: Dockerfile.build
     environment:
       RAILS_SERVE_STATIC_FILES: "true"

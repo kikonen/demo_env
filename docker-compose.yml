@@ -17,11 +17,6 @@ services:
 
   host:
     container_name: host
-    build:
-      context: ./projects/host
-      args:
-        - DOCKER_UID=${DOCKER_UID:-1000}
-        - DOCKER_GID=${DOCKER_GID:-100}
     env_file:
       - .env
     environment:

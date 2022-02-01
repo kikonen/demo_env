@@ -3,7 +3,11 @@ version: '3.3'
 services:
   host:
     build:
+      context: ./projects/host
       dockerfile: Dockerfile
+      args:
+        - DOCKER_UID=${DOCKER_UID:-1000}
+        - DOCKER_GID=${DOCKER_GID:-100}
     ports:
       - "3000"
     volumes:
