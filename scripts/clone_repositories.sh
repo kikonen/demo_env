@@ -8,7 +8,7 @@ PROJECTS_DIR="$ROOT_DIR/projects"
 cd $PROJECTS_DIR
 
 echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
-    if [[ $$REPO ]]; then
+    if [[ -d $$REPO ]]; then
         echo "EXIST: $REPO"
         continue
     fi

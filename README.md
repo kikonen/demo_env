@@ -7,6 +7,7 @@ Experimenting with strategies with building and deploying rails app as container
 
 ## Docker
 - https://stackoverflow.com/questions/32230577/how-do-i-define-the-name-of-image-built-with-docker-compose
+- https://docs.docker.com/compose/environment-variables/
 
 ## Bash
 - https://stackoverflow.com/questions/35385962/arrays-in-a-posix-compliant-shell

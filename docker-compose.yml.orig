@@ -16,14 +16,21 @@ services:
     command: ['nginx', '-g', 'daemon off;']
 
   host:
+<<<<<<< Updated upstream
+    container_name: host
+=======
     container_name: demo_host
+    build:
+      context: ./projects/host
+      args:
+        - DOCKER_UID=${DOCKER_UID:-1000}
+        - DOCKER_GID=${DOCKER_GID:-100}
+>>>>>>> Stashed changes
     env_file:
       - .env
-      - .db_secrets
     environment:
       SERVER_MODE: $SERVER_MODE
-      RAILS_DB_HOST: db
-      RAILS_DB_SUFFIX: host
+      RAILS_DB_HOST: host_db
     logging:
       options:
         max-size: "1m"
@@ -35,15 +42,14 @@ services:
     networks:
       - backend
     depends_on:
-      - db
+      - host_db
       - nginx
 
-  db:
+  host_db:
     image: postgres:13.2
-    container_name: demo_db
+    container_name: demo_host_db
     env_file:
       - .env
-      - .db_secrets
     environment:
       PGDATA: /data/db
     logging:
@@ -57,9 +63,7 @@ services:
 
   adminer:
     image: adminer
-    container_name: demo_adminer
-    env_file:
-      - .env
+    container_name: adminer
     profiles: ["dev"]
     restart: always
     logging:
