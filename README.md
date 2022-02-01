@@ -15,6 +15,7 @@ Experimenting with strategies with building and deploying rails app as container
 - http://blog.siami.fr/diving-in-rails-the-request-handling
 - https://coolrequest.dev/2021/12/13/docker_image_rails_part2.html
 - https://stackoverflow.com/questions/3181746/what-is-the-replacement-for-actioncontrollerbase-relative-url-root
+- https://apidock.com/rails/Rails/groups/class
 
 ## Bundle
 
