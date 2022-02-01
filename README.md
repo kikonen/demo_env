@@ -5,6 +5,9 @@ Experimenting with strategies with building and deploying rails app as container
 
 # References
 
+## Bash
+- https://stackoverflow.com/questions/35385962/arrays-in-a-posix-compliant-shell
+
 ## Rails
 - http://blog.siami.fr/diving-in-rails-the-request-handling
 - https://coolrequest.dev/2021/12/13/docker_image_rails_part2.html
