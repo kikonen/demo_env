@@ -1,1 +1,1 @@
-time docker-compose -f docker-compose.yml -f docker-compose.build.yml build
+time docker-compose --project-name build -f docker-compose.yml -f docker-compose.build.yml build
