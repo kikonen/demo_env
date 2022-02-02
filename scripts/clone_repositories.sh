@@ -18,9 +18,6 @@ echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     else
         echo "EXIST: $REPO"
     fi
-
-    cp -a $SERVICE_DIR/* $REPO_DIR
-    cp -a $SERVICE_DIR/.dockerignore $REPO_DIR
 done
 
-ls -al $PROJECTS_DIR
+bash -e $DIR/setup_repositories.sh "$@"

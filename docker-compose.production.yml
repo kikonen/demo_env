@@ -1,3 +1,3 @@
 services:
   host:
-    image: docker.ikari.fi/build_host:1.3
+    image: docker.ikari.fi/build_host:1.4

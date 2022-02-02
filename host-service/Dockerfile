@@ -10,8 +10,7 @@ ARG DOCKER_USER=docker \
 # http://blog.siami.fr/diving-in-rails-the-request-handling
 ENV RAILS_ENV=development \
     SCRIPT_NAME=/ui \
-    RAILS_RELATIVE_URL_ROOT=/ui \
-    ORIGINAL_SCRIPT_NAME=/ui
+    RAILS_RELATIVE_URL_ROOT=/ui
 
 ENV BUNDLE_PATH=/bundle/vendor \
     GEM_HOME=/bundle/vendor/ruby/2.7.0 \

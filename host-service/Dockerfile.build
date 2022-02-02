@@ -9,8 +9,7 @@ ARG DOCKER_USER=docker \
 ENV RAILS_ENV=production \
     RAILS_GROUPS="deploy" \
     SCRIPT_NAME=/ui \
-    RAILS_RELATIVE_URL_ROOT=/ui \
-    ORIGINAL_SCRIPT_NAME=/ui
+    RAILS_RELATIVE_URL_ROOT=/ui
 
 ENV BUNDLE_PATH=/bundle/vendor \
     GEM_HOME=/bundle/vendor/ruby/2.7.0 \
@@ -35,7 +34,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN yarn install
-RUN bundle install --without "development test"
+RUN bundle config set without 'development test'
+RUN bundle install
 RUN rake assets:precompile
 
 ####################
@@ -50,9 +50,9 @@ ARG DOCKER_USER=docker \
 # http://blog.siami.fr/diving-in-rails-the-request-handling
 ENV RAILS_ENV=production \
     RAILS_GROUPS="production" \
+    RAILS_SERVE_STATIC_FILES=true \
     SCRIPT_NAME=/ui \
-    RAILS_RELATIVE_URL_ROOT=/ui \
-    ORIGINAL_SCRIPT_NAME=/ui
+    RAILS_RELATIVE_URL_ROOT=/ui
 
 ENV BUNDLE_PATH=/bundle/vendor \
     GEM_HOME=/bundle/vendor/ruby/2.7.0 \
@@ -69,7 +69,8 @@ COPY . .
 COPY --from=builder /app/public/assets public/assets
 COPY --from=builder /app/public/packs public/packs
 COPY --from=builder /bundle /bundle
-RUN bundle install --without "development test deploy"
+#RUN bundle config set without 'development test deploy'
+#RUN bundle install
 
 RUN rm -fr vendor
 
