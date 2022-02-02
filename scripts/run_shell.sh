@@ -3,8 +3,8 @@ DIR=`realpath $DIR`
 ROOT_DIR=`dirname $DIR`
 
 CONTAINER=$1
-SERVER_MODE=debug docker-compose up -d $CONTAINER
+SERVER_MODE=debug docker-compose --project-dir=$ROOT_DIR up -d $CONTAINER
 
 shift
-docker-compose exec $CONTAINER bash "$@"
-#docker-compose stop $CONTAINER
+docker-compose --project-dir=$ROOT_DIR exec $CONTAINER bash "$@"
+#docker-compose --project-dir=$ROOT_DIR stop $CONTAINER
