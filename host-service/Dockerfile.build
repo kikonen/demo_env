@@ -69,8 +69,8 @@ COPY . .
 COPY --from=builder /app/public/assets public/assets
 COPY --from=builder /app/public/packs public/packs
 COPY --from=builder /bundle /bundle
-#RUN bundle config set without 'development test deploy'
-#RUN bundle install
+RUN bundle config set without 'development test deploy'
+RUN bundle install
 
 RUN rm -fr vendor
 
