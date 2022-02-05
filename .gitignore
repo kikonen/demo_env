@@ -2,15 +2,18 @@ log/*
 tmp/*
 projects/*
 
-!.keep
-
 .env*
 .emacs*
 
 *.orig
 
+.*env
+.*secrets
 
 *~
 ~*
+.#*
 #*
 *#
+
+!.keep
