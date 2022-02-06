@@ -33,4 +33,6 @@ RUN yarn install
 RUN bundle config set without 'development test'
 RUN bundle install
 
-RUN rm -fr /app
+RUN rm -fr /app \
+    mkdir -p /app \
+    ln -sf /node_modules node_modules
