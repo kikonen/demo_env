@@ -13,6 +13,7 @@ echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
 
     cp -a $SERVICE_DIR/* $REPO_DIR
     cp -a $SERVICE_DIR/.dockerignore $REPO_DIR
+    cp -a $SERVICE_DIR/.yarnrc $REPO_DIR
 done
 
 ls -al $PROJECTS_DIR

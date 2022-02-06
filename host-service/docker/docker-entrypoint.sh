@@ -15,7 +15,7 @@ echo "SERVER_MODE: $SERVER_MODE"
 if [[ "$SERVER_MODE" == "debug" ]]; then
     sleep infinity
 else
-    bundle check --without "development test deploy" || bundle install --without "development test deploy"
+    bundle check || bundle install
 
     # NOTE KI *NEW* intance clear old trash
     if [[ -f /app/tmp/pids/server.pid ]]; then
