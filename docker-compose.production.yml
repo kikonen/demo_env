@@ -1,6 +1,6 @@
 services:
   nginx:
-    container_name: demo_peoduction_nginx
+    container_name: demo_production_nginx
     env_file:
       - .env
       - .production_env
