@@ -31,8 +31,6 @@ services:
       - .build_secrets
     labels:
       ports: "5432"
-    volumes:
-    - build_postgres_data:/data
 
   adminer:
     container_name: demo_build_adminer
@@ -42,6 +40,3 @@ services:
       - .build_secrets
     labels:
       ports: "8080"
-
-volumes:
-  build_postgres_data:

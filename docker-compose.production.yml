@@ -20,8 +20,6 @@ services:
       - .env
       - .production_env
       - .production_secrets
-    volumes:
-    - production_postgres_data:/data
 
   adminer:
     container_name: demo_production_adminer
@@ -29,6 +27,3 @@ services:
       - .env
       - .production_env
       - .production_secrets
-
-volumes:
-  production_postgres_data:

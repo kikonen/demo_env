@@ -24,6 +24,9 @@ services:
     working_dir: /app
     networks:
       - backend
+    volumes:
+    - host_log:/app/log
+    - host_tmp:/app/tmp
     depends_on:
       - db
       - nginx
@@ -39,6 +42,8 @@ services:
         max-file: "2"
     networks:
       - backend
+    volumes:
+    - postgres_data:/data
 
   adminer:
     container_name: demo_adminer
@@ -55,3 +60,8 @@ services:
 networks:
   frontend:
   backend:
+
+volumes:
+  postgres_data:
+  host_log:
+  host_tmp:

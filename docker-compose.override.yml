@@ -27,8 +27,6 @@ services:
     - host_assets:/assets
     - host_bundle:/bundle
     - host_node_modules:/node_modules
-    - host_log:/app/log
-    - host_tmp:/app/tmp
 
   db:
     container_name: demo_development_db
@@ -36,8 +34,6 @@ services:
       - .env
       - .development_env
       - .development_secrets
-    volumes:
-    - development_postgres_data:/data
 
   adminer:
     container_name: demo_development_adminer
@@ -47,9 +43,6 @@ services:
       - .development_secrets
 
 volumes:
-  development_postgres_data:
   host_assets:
   host_bundle:
   host_node_modules:
-  host_log:
-  host_tmp:
