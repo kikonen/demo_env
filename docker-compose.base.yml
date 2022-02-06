@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  nginx:
+    container_name: demo_base_nginx
+
+  host:
+    container_name: demo_base_host
+    build:
+      context: ./projects/host
+      dockerfile: Dockerfile.base
+
+  db:
+    container_name: demo_base_db
+
+  adminer:
+    container_name: demo_base_adminer

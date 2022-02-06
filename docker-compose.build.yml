@@ -20,8 +20,6 @@ services:
       - .env
       - .build_env
       - .build_secrets
-    labels:
-      ports: "3000"
 
   db:
     container_name: demo_build_db
@@ -29,8 +27,6 @@ services:
       - .env
       - .build_env
       - .build_secrets
-    labels:
-      ports: "5432"
 
   adminer:
     container_name: demo_build_adminer
@@ -38,5 +34,3 @@ services:
       - .env
       - .build_env
       - .build_secrets
-    labels:
-      ports: "8080"

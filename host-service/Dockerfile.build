@@ -1,4 +1,7 @@
-FROM ruby:2.7.5 as builder
+ARG BASE_TAG
+#FROM ruby:2.7.5 as builder
+FROM docker.ikari.fi/demo_base_host:$BASE_TAG
+RUN rm -fr /app
 WORKDIR /app
 
 ARG DOCKER_USER=docker \
@@ -18,24 +21,27 @@ ENV BUNDLE_PATH=/bundle/vendor \
     PATH=$PATH:/app/bin:/node_modules/.bin
 
 ####################
+#RUN mkdir -p /node_modules
+
+# RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
+#     apt-get update && \
+#     apt-get install -y --no-install-recommends nodejs && \
+#     rm -rf /var/lib/apt/lists/*
+
+# RUN npm install --global yarn
+
+# RUN apt-get update && \
+#     apt-get install -y --no-install-recommends libpq-dev && \
+#     rm -rf /var/lib/apt/lists/*
+
+####################
 COPY . .
 
-RUN mkdir -p /node_modules
-
-RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends nodejs && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN npm install --global yarn
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
-
 RUN yarn install
+
 RUN bundle config set without 'development test'
 RUN bundle install
+
 RUN rake assets:precompile
 
 ####################

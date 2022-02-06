@@ -1,0 +1,38 @@
+FROM ruby:2.7.5
+WORKDIR /app
+
+ENV RAILS_ENV=production \
+    RAILS_GROUPS="deploy" \
+    SCRIPT_NAME=/ui \
+    RAILS_RELATIVE_URL_ROOT=/ui
+
+ENV BUNDLE_PATH=/bundle/vendor \
+    GEM_HOME=/bundle/vendor/ruby/2.7.0 \
+    GEM_PATH=/bundle/vendor/ruby/2.7.0/bin \
+    NODE_PATH=/node_modules \
+    PATH=$PATH:/app/bin:/node_modules/.bin
+
+####################
+RUN mkdir -p /node_modules
+
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN npm install --global yarn
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY Gemfile Gemfile.lock \
+    package.json yarn.lock .yarnrc \
+    .
+
+RUN yarn install
+
+RUN bundle config set without 'development test'
+RUN bundle install
+
+RUN rm -fr /app

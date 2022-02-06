@@ -22,6 +22,8 @@ services:
         max-size: "1m"
         max-file: "2"
     working_dir: /app
+    labels:
+      ports: "3000"
     networks:
       - backend
     volumes:
@@ -40,6 +42,8 @@ services:
       options:
         max-size: "1m"
         max-file: "2"
+    labels:
+      ports: "5432"
     networks:
       - backend
     volumes:
@@ -54,6 +58,8 @@ services:
       options:
         max-size: "1m"
         max-file: "2"
+    labels:
+      ports: "8080"
     networks:
       - backend
 
