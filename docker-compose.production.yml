@@ -8,7 +8,7 @@ services:
 
   host:
     container_name: demo_production_host
-    image: docker.ikari.fi/build_host:1.5
+    image: docker.ikari.fi/demo_build_host:${BUILD_TAG}
     env_file:
       - .env
       - .production_env
