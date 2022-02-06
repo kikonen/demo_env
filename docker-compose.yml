@@ -2,10 +2,8 @@ version: '3.3'
 
 services:
   nginx:
-    image: nginx:1.19.9
     container_name: demo_nginx
-    env_file:
-      - .env
+    image: nginx:1.19.9
     volumes:
      - ./nginx-service/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
     networks:
@@ -17,21 +15,13 @@ services:
 
   host:
     container_name: demo_host
-    env_file:
-      - .env
-      - .db_secrets
     environment:
       SERVER_MODE: $SERVER_MODE
-      RAILS_DB_HOST: db
-      RAILS_DB_SUFFIX: host
     logging:
       options:
         max-size: "1m"
         max-file: "2"
     working_dir: /app
-    volumes:
-    - host_log:/app/log
-    - host_tmp:/app/tmp
     networks:
       - backend
     depends_on:
@@ -39,28 +29,21 @@ services:
       - nginx
 
   db:
-    image: postgres:13.2
     container_name: demo_db
-    env_file:
-      - .env
-      - .db_secrets
+    image: postgres:13.2
     environment:
       PGDATA: /data/db
     logging:
       options:
         max-size: "1m"
         max-file: "2"
-    volumes:
-    - postgres_data:/data
     networks:
       - backend
 
   adminer:
-    image: adminer
     container_name: demo_adminer
-    env_file:
-      - .env
-    profiles: ["dev"]
+    image: adminer
+    profiles: ["development"]
     restart: always
     logging:
       options:
@@ -72,8 +55,3 @@ services:
 networks:
   frontend:
   backend:
-
-volumes:
-  postgres_data:
-  host_log:
-  host_tmp:

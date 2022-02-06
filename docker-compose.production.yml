@@ -1,3 +1,34 @@
 services:
+  nginx:
+    container_name: demo_peoduction_nginx
+    env_file:
+      - .env
+      - .production_env
+      - .production_secrets
+
   host:
+    container_name: demo_production_host
     image: docker.ikari.fi/build_host:1.5
+    env_file:
+      - .env
+      - .production_env
+      - .production_secrets
+
+  db:
+    container_name: demo_production_db
+    env_file:
+      - .env
+      - .production_env
+      - .production_secrets
+    volumes:
+    - production_postgres_data:/data
+
+  adminer:
+    container_name: demo_production_adminer
+    env_file:
+      - .env
+      - .production_env
+      - .production_secrets
+
+volumes:
+  production_postgres_data:

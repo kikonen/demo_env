@@ -1,17 +1,47 @@
 version: '3.3'
 
 services:
+  nginx:
+    container_name: demo_build_nginx
+    env_file:
+      - .env
+      - .build_env
+      - .build_secrets
+
   host:
+    container_name: demo_build_host
     build:
       context: ./projects/host
       dockerfile: Dockerfile.build
       args:
         - DOCKER_UID=${DOCKER_UID:-1000}
         - DOCKER_GID=${DOCKER_GID:-100}
-    environment:
-      RAILS_SERVE_STATIC_FILES: "true"
-    entrypoint: ["sleep", "infinity"]
+    env_file:
+      - .env
+      - .build_env
+      - .build_secrets
+    labels:
+      ports: "3000"
 
   db:
-    environment:
-      POSTGRES_DB: production
+    container_name: demo_build_db
+    env_file:
+      - .env
+      - .build_env
+      - .build_secrets
+    labels:
+      ports: "5432"
+    volumes:
+    - build_postgres_data:/data
+
+  adminer:
+    container_name: demo_build_adminer
+    env_file:
+      - .env
+      - .build_env
+      - .build_secrets
+    labels:
+      ports: "8080"
+
+volumes:
+  build_postgres_data:
