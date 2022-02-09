@@ -13,9 +13,6 @@ services:
     build:
       context: ./projects/host
       dockerfile: Dockerfile.build
-      args:
-        - DOCKER_UID=${DOCKER_UID:-1000}
-        - DOCKER_GID=${DOCKER_GID:-100}
     env_file:
       - .env
       - .build_env

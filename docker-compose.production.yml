@@ -13,6 +13,9 @@ services:
       - .env
       - .production_env
       - .production_secrets
+    volumes:
+      - ./host-service/docker/webapp.conf:/etc/nginx/sites-enabled/webapp.conf
+      - ./host-service/docker/webapp_env.conf:/etc/nginx/main.d/webapp_env.conf
 
   db:
     container_name: demo_production_db
