@@ -5,7 +5,7 @@ services:
     container_name: demo_nginx
     image: nginx:1.19.9
     volumes:
-     - ./nginx-service/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
+     - ./nginx-service/templates:/etc/nginx/templates
     networks:
       - frontend
       - backend

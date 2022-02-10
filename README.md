@@ -122,3 +122,7 @@ BUILD_TAG=latest scripts/production_up.sh
 - https://dev.to/k_penguin_sato/cache-rails-gems-using-docker-compose-3o3f
 - https://github.com/sass/sassc-ruby/issues/189
 - https://dev.to/kolide/how-to-migrate-a-rails-6-app-from-sass-rails-to-cssbundling-rails-4l41
+
+## nginx
+- https://linuxhint.com/nginx-use-environment-variables/
+- https://hub.docker.com/_/nginx
