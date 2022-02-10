@@ -9,10 +9,29 @@ Experimenting with strategies with building and deploying rails app as container
 scripts/clone_repositories.sh
 ```
 
+## Setup development env
+
+```bash
+cp -r _demo_secrets .development_secrets
+cp _env .env
+cp _development_env .development_env
+```
+
+## Setup development DB
+
+```bash
+scripts/development_up.sh
+docker exec -it demo_development_host bash
+rake db:create
+rake db:migrate
+```
+
 ## Run development
 
 ```bash
 scripts/development_up.sh
+
+# http://localhost:8091/ui
 ```
 
 ## Build base
@@ -29,18 +48,42 @@ BASE_TAG=1.x make base_tag
 BASE_TAG=1.x make base_push
 ```
 
-## Build
+## Setup production build env
+
+```bash
+cp _env .env
+cp _build_env .build_env
+```
+
+## Build production
 
 ```bash
 scripts/production_build.sh --build-arg BASE_TAG=latest --no-cache
 BUILD_TAG=latest make build_tag
 ```
 
-## Publish build
+## Publish production build
 
 ```bash
 BUILD_TAG=1.x make build_tag
 BUILD_TAG=1.x make build_push
+```
+
+## Setup production env
+
+```bash
+cp -r _demo_secrets .production_secrets
+cp _env .env
+cp _production_env .production_env
+```
+
+## Setup production DB
+
+```bash
+scripts/production_up.sh
+docker exec -it demo_production_host bash
+rake db:create
+rake db:migrate
 ```
 
 ## Run production
@@ -48,6 +91,8 @@ BUILD_TAG=1.x make build_push
 ```bash
 BUILD_TAG=latest make build_tag
 BUILD_TAG=latest scripts/production_up.sh
+
+# http://localhost:8092/ui
 ```
 
 # References
