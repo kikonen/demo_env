@@ -51,9 +51,15 @@ COPY --chown=app:app --from=builder /app/public/assets public/assets
 COPY --chown=app:app --from=builder /app/public/packs public/packs
 COPY --chown=app:app --from=builder /bundle /bundle
 
+####################
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends postgresql-client && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN bundle config set without 'development test deploy' && \
     bundle install && \
     rm -fr vendor && \
+    ln -sf /var/run/secrets/HOST_MASTER_KEY config/master.key && \
     env && \
     ls -al
 

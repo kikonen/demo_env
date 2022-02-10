@@ -5,11 +5,6 @@
 
 sudo chown -R docker:users /bundle /node_modules /app/log /app/tmp /app/public
 
-if [[ $MASTER_KEY != "" ]]; then
-    echo $MASTER_KEY > config/master.key
-    sudo chown docker:users config/master.key
-fi
-
 echo "SERVER_MODE: $SERVER_MODE"
 
 if [[ "$SERVER_MODE" == "debug" ]]; then

@@ -38,6 +38,8 @@ services:
     image: postgres:13.2
     environment:
       PGDATA: /data/db
+      POSTGRES_PASSWORD_FILE: /var/run/secrets/POSTGRES_PASSWORD
+      POSTGRES_USER_FILE: /var/run/secrets/POSTGRES_USER
     logging:
       options:
         max-size: "1m"

@@ -6,7 +6,6 @@ services:
     env_file:
       - .env
       - .development_env
-      - .development_secrets
 
   host:
     container_name: demo_development_host
@@ -19,7 +18,8 @@ services:
     env_file:
       - .env
       - .development_env
-      - .development_secrets
+    secrets:
+      - HOST_MASTER_KEY
     labels:
       ports: "3000"
     volumes:
@@ -33,16 +33,25 @@ services:
     env_file:
       - .env
       - .development_env
-      - .development_secrets
+    secrets:
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
 
   adminer:
     container_name: demo_development_adminer
     env_file:
       - .env
       - .development_env
-      - .development_secrets
 
 volumes:
   host_assets:
   host_bundle:
   host_node_modules:
+
+secrets:
+  POSTGRES_PASSWORD:
+    file: .development_secrets/POSTGRES_PASSWORD
+  POSTGRES_USER:
+    file: .development_secrets/POSTGRES_USER
+  HOST_MASTER_KEY:
+    file: .development_secrets/HOST_MASTER_KEY
