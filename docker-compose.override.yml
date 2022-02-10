@@ -12,9 +12,6 @@ services:
     build:
       context: ./projects/host
       dockerfile: Dockerfile
-      args:
-        - DOCKER_UID=${DOCKER_UID:-1000}
-        - DOCKER_GID=${DOCKER_GID:-100}
     env_file:
       - .env
       - .development_env
@@ -23,10 +20,12 @@ services:
     labels:
       ports: "3000"
     volumes:
-    - ./projects/host:/app
-    - host_assets:/assets
-    - host_bundle:/bundle
-    - host_node_modules:/node_modules
+      - ./projects/host:/app
+      - host_assets:/app/public/assets
+      - host_bundle:/bundle
+      - host_node_modules:/node_modules
+    tmpfs:
+      - /tmp/pids
 
   db:
     container_name: demo_development_db
