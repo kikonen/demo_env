@@ -39,8 +39,8 @@ BUILD_TAG=latest make build_tag
 ## Publish build
 
 ```bash
-BASE_TAG=1.x make build_tag
-BASE_TAG=1.x make build_push
+BUILD_TAG=1.x make build_tag
+BUILD_TAG=1.x make build_push
 ```
 
 ## Run production
