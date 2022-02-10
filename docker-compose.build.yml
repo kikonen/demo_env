@@ -6,7 +6,6 @@ services:
     env_file:
       - .env
       - .build_env
-      - .build_secrets
 
   host:
     container_name: demo_build_host
@@ -16,18 +15,15 @@ services:
     env_file:
       - .env
       - .build_env
-      - .build_secrets
 
   db:
     container_name: demo_build_db
     env_file:
       - .env
       - .build_env
-      - .build_secrets
 
   adminer:
     container_name: demo_build_adminer
     env_file:
       - .env
       - .build_env
-      - .build_secrets
