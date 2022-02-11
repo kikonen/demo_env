@@ -25,7 +25,6 @@ ENV BUNDLE_PATH=/bundle/vendor \
 # NOTE KI CREATE dis for mounted volume permissions
 RUN mkdir -p /node_modules && \
     mkdir -p /bundle && \
-    mkdir -p /pids && \
     mkdir -p /app/public/assets && \
     mkdir -p /app/log && \
     mkdir -p /app/tmp && \
@@ -47,7 +46,7 @@ RUN useradd -m ${DOCKER_USER} --uid=${DOCKER_UID} --gid=${DOCKER_GID} && \
 RUN echo "docker ALL=(ALL:ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/docker
 
 # NOTE KI Permissions WILL be applied to mounted volumes
-RUN chown -R ${DOCKER_UID}:${DOCKER_GID} /pids /bundle /node_modules /app
+RUN chown -R ${DOCKER_UID}:${DOCKER_GID} /bundle /node_modules /app
 
 USER ${DOCKER_UID}:${DOCKER_GID}
 

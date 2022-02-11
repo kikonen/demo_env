@@ -25,7 +25,7 @@ services:
       - host_bundle:/bundle
       - host_node_modules:/node_modules
     tmpfs:
-      - /tmp/pids
+      - /pids:mode=7777,size=1k,uid=1000,gid=100
 
   db:
     container_name: demo_development_db
