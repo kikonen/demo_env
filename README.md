@@ -103,6 +103,7 @@ BUILD_TAG=latest scripts/production_up.sh
 - https://faun.pub/set-current-host-user-for-docker-container-4e521cef9ffc
 - https://github.com/firewalld/firewalld/issues/461
 - https://docs.docker.com/network/iptables/
+- https://docs.docker.com/compose/production/
 
 ## Bash
 - https://stackoverflow.com/questions/35385962/arrays-in-a-posix-compliant-shell
@@ -126,3 +127,4 @@ BUILD_TAG=latest scripts/production_up.sh
 ## nginx
 - https://linuxhint.com/nginx-use-environment-variables/
 - https://hub.docker.com/_/nginx
+- https://www.digitalocean.com/community/tutorials/how-to-create-let-s-encrypt-wildcard-certificates-with-certbot
