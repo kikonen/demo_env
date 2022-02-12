@@ -1,13 +1,11 @@
 services:
   nginx:
-    container_name: demo_production_nginx
     env_file:
       - .env
       - .production_env
     restart: always
 
   host:
-    container_name: demo_production_host
     image: docker.ikari.fi/demo_build_host:${BUILD_TAG}
     env_file:
       - .env
@@ -20,7 +18,6 @@ services:
     restart: always
 
   db:
-    container_name: demo_production_db
     env_file:
       - .env
       - .production_env
@@ -30,7 +27,6 @@ services:
     restart: always
 
   adminer:
-    container_name: demo_production_adminer
     env_file:
       - .env
       - .production_env

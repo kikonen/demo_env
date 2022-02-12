@@ -34,4 +34,8 @@ COMPOSE_PROFILES=${DOCKER_ENV}
 
 echo "CMD=$DOCKER_COMPOSE"
 
+export BASE_NAME
+export COMPOSE_PROFILES
+export DOCKER_ENV
+
 $DIR/setup_repositories.sh

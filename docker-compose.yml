@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   nginx:
-    container_name: demo_nginx
+    container_name: ${BASE_NAME}_${DOCKER_ENV}_nginx
     image: nginx:1.19.9
     volumes:
      - ./nginx-service/templates:/etc/nginx/templates
@@ -14,7 +14,7 @@ services:
     command: ['nginx', '-g', 'daemon off;']
 
   host:
-    container_name: demo_host
+    container_name: ${BASE_NAME}_${DOCKER_ENV}_host
     environment:
       SERVER_MODE: $SERVER_MODE
     logging:
@@ -34,7 +34,7 @@ services:
       - nginx
 
   db:
-    container_name: demo_db
+    container_name: ${BASE_NAME}_${DOCKER_ENV}_db
     image: postgres:13.2
     environment:
       PGDATA: /data/db
@@ -52,7 +52,7 @@ services:
     - postgres_data:/data
 
   adminer:
-    container_name: demo_adminer
+    container_name: ${BASE_NAME}_${DOCKER_ENV}_adminer
     image: adminer
     profiles: ["development"]
     restart: always

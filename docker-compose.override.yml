@@ -2,13 +2,11 @@ version: '3.3'
 
 services:
   nginx:
-    container_name: demo_development_nginx
     env_file:
       - .env
       - .development_env
 
   host:
-    container_name: demo_development_host
     build:
       context: ./projects/host
       dockerfile: Dockerfile
@@ -28,7 +26,6 @@ services:
       - /pids:mode=7777,size=1k,uid=1000,gid=100
 
   db:
-    container_name: demo_development_db
     env_file:
       - .env
       - .development_env
@@ -37,8 +34,7 @@ services:
       - POSTGRES_USER
 
   adminer:
-    container_name: demo_development_adminer
-    env_file:
+   env_file:
       - .env
       - .development_env
 

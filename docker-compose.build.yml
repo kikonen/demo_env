@@ -2,13 +2,11 @@ version: '3.3'
 
 services:
   nginx:
-    container_name: demo_build_nginx
     env_file:
       - .env
       - .build_env
 
   host:
-    container_name: demo_build_host
     build:
       context: ./projects/host
       dockerfile: Dockerfile.build
@@ -17,13 +15,11 @@ services:
       - .build_env
 
   db:
-    container_name: demo_build_db
     env_file:
       - .env
       - .build_env
 
   adminer:
-    container_name: demo_build_adminer
     env_file:
       - .env
       - .build_env
