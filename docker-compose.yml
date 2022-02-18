@@ -4,6 +4,8 @@ services:
   nginx:
     container_name: ${BASE_NAME}_${DOCKER_ENV}_nginx
     image: nginx:1.19.9
+    environment:
+      DOCKER_ENV: ${DOCKER_ENV}
     volumes:
      - ./nginx-service/templates:/etc/nginx/templates
     networks:
@@ -16,7 +18,8 @@ services:
   host:
     container_name: ${BASE_NAME}_${DOCKER_ENV}_host
     environment:
-      SERVER_MODE: $SERVER_MODE
+      DOCKER_ENV: ${DOCKER_ENV}
+      SERVER_MODE: ${SERVER_MODE}
     logging:
       options:
         max-size: "1m"
