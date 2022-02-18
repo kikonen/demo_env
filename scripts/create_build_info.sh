@@ -91,9 +91,9 @@ fi
 
 
 printf "{\n\
-  \"BUILD_DATE\": \"${BUILD_DATE}\",\n\
-  \"BUILD_CSET\": \"${BUILD_CSET}\",\n\
-  \"BUILD_REVISION\": \"${BUILD_REVISION}\"\n\
+  \"build_date\": \"${BUILD_DATE}\",\n\
+  \"build_cset\": \"${BUILD_CSET}\",\n\
+  \"build_revision\": \"${BUILD_REVISION}\"\n\
 }\n"
 exit
 
