@@ -47,14 +47,14 @@ resolve_tag() {
     fi
 }
 
-resolve_rev() {
-    local revs=`git log -1 --pretty=format:"%D" ${CSET}`
-#    echo $revs
+resolve_branch() {
+    local branches=`git log -1 --pretty=format:"%D" ${CSET}`
+#    echo $branches
 
-    local tmp_file=`mktemp /tmp/revs_XXXXX`
-    local split_revs
-    IFS=',' read -ra split_revs <<< "$revs"
-    for v in "${split_revs[@]}"; do
+    local tmp_file=`mktemp /tmp/branches_XXXXX`
+    local split_branches
+    IFS=',' read -ra split_branches <<< "$branches"
+    for v in "${split_branches[@]}"; do
         v=`echo $v | sed -e "s/ //g"`
         v=`echo $v | sed -e "s/HEAD->//g"`
         v=`echo $v | sed -e "s/tag:.*//g"`
@@ -66,7 +66,7 @@ resolve_rev() {
         fi
     done
 
-    REV=`sort $tmp_file | uniq | tr "\n" ' ' | cat | awk '{$1=$1;print}'`
+    BRANCH=`sort $tmp_file | uniq | tr "\n" ' ' | cat | awk '{$1=$1;print}'`
 
     rm -f $tmp_file
 }
@@ -74,82 +74,26 @@ resolve_rev() {
 resolve_cset
 resolve_date
 resolve_tag
-resolve_rev
+resolve_branch
 
 #echo "[$CSET]"
 #echo "[$DATE]"
 #echo "[$TAG]"
-#echo "[$REV]"
+#echo "[$BRANCH]"
 
-BUILD_DATE=$DATE
-BUILD_CSET=$CSET
+BUILD_DATE_VALUE="\"$DATE\""
+BUILD_CSET_VALUE="\"$CSET\""
+BUILD_BRANCH_VALUE="\"$BRANCH\""
+
 if [[ $TAG != "" ]]; then
-    BUILD_REVISION=$TAG
+    BUILD_TAG_VALUE="\"$TAG\""
 else
-    BUILD_REVISION="$REV"
+    BUILD_TAG_VALUE="null";
 fi
 
-
 printf "{\n\
-  \"build_date\": \"${BUILD_DATE}\",\n\
-  \"build_cset\": \"${BUILD_CSET}\",\n\
-  \"build_revision\": \"${BUILD_REVISION}\"\n\
+  \"build_date\": ${BUILD_DATE_VALUE},\n\
+  \"build_cset\": ${BUILD_CSET_VALUE},\n\
+  \"build_tag\": ${BUILD_TAG_VALUE},\n\
+  \"build_branch\": ${BUILD_BRANCH_VALUE}\n\
 }\n"
-exit
-
-# NOTE KI assume extra tags are redundant rcX tags matching build tag
-tags = tags_str.split(' ')
-tags.delete_if { |t| /_rc/.match?(t) } if tags.size > 1
-tags.delete_if { |t| /_alpha/.match?(t) } if tags.size > 1
-tags_str = tags.join(' ') if tags.present?
-
-tags_str
-
-
-
-resolve_build_info() {
-    build_date = find_date
-    build_commit = find_commit
-
-    build_tag = find_tag(build_commit)
-    build_tag = find_name_rev(build_commit) if build_tag.blank?
-    build_tag = nil if build_tag.blank?
-
-    puts "DIR: #{Dir.getwd}"
-    puts "DATE: #{build_date}"
-    puts "COMMIT: #{build_commit}"
-    puts "TAG: #{build_tag}"
-
-    {
-        date: build_date,
-        rev: build_tag || build_commit,
-    }
-}
-
-#   def self.info(working_dir)
-#     bi = nil
-#     Dir.chdir(working_dir) do
-#       bi = resolve_build_info
-#     end
-#     "#{bi[:date]} - #{bi[:rev]}"
-#   end
-# end
-
-# namespace :build do
-#   desc 'Show build info'
-#   task :show do
-#     puts GenerateBuildInfo.info(Dir.getwd)
-#   end
-
-#   desc 'Save build info'
-#   task :save, [:working_dir, :target_file]  do |t, args|
-#     working_dir = args[:working_dir]
-#     target_file = args[:target_file]
-
-#     puts "SRC: #{working_dir}"
-#     puts "DST: #{target_file}"
-
-#     info = GenerateBuildInfo.info(working_dir)
-#     File.open(target_file, "w" ) {|f| f.write "#{info}\n" }
-#   end
-# end

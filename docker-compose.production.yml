@@ -11,7 +11,7 @@ services:
       - .env
       - .production_env
     environment:
-      BUILD_TAG: ${BUILD_TAG}
+      CONTAINER_VERSION: ${BUILD_TAG}
     secrets:
       - HOST_MASTER_KEY
     volumes:
