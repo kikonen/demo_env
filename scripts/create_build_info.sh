@@ -82,16 +82,17 @@ resolve_rev
 #echo "[$REV]"
 
 BUILD_DATE=$DATE
+BUILD_CSET=$CSET
 if [[ $TAG != "" ]]; then
     BUILD_REVISION=$TAG
 else
-    BUILD_REVISION=$REV
+    BUILD_REVISION="$REV"
 fi
 
 
 printf "{\n\
   \"BUILD_DATE\": \"${BUILD_DATE}\",\n\
-  \"BUILD_LABEL\": \"${BUILD_LABEL}\",\n\
+  \"BUILD_CSET\": \"${BUILD_CSET}\",\n\
   \"BUILD_REVISION\": \"${BUILD_REVISION}\"\n\
 }\n"
 exit

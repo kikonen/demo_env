@@ -5,6 +5,7 @@ ROOT_DIR=`dirname $DIR`
 if [[ -f $ROOT_DIR/.env ]]; then
    . $ROOT_DIR/.env
 fi
+PROJECTS_DIR=$ROOT_DIR/projects
 
 if [[ $BASE_NAME == "" ]]; then
     echo "BASE_NAME missing from .env"
