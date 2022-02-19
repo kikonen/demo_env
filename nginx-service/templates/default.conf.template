@@ -42,7 +42,9 @@ server {
         proxy_set_header X-Forwarded-Port  $sl_port;
 
         proxy_set_header X-Real-IP         $remote_addr;
-        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        #proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        # https://stackoverflow.com/questions/29279084/nginx-proxy-add-x-forwarded-for-and-real-ip-header
+        proxy_set_header X-Forwarded-For "$http_x_forwarded_for, $realip_remote_addr";
 
         # NOTE KI do NOT discard /ui for production (due to passenger)
         # NOTE KI discard /ui for development

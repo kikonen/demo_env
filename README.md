@@ -128,3 +128,4 @@ BUILD_TAG=latest scripts/production_up.sh
 - https://linuxhint.com/nginx-use-environment-variables/
 - https://hub.docker.com/_/nginx
 - https://www.digitalocean.com/community/tutorials/how-to-create-let-s-encrypt-wildcard-certificates-with-certbot
+- https://stackoverflow.com/questions/29279084/nginx-proxy-add-x-forwarded-for-and-real-ip-header
