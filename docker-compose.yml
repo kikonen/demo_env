@@ -58,7 +58,6 @@ services:
     container_name: ${BASE_NAME}_${DOCKER_ENV}_adminer
     image: adminer
     profiles: ["development"]
-    restart: always
     logging:
       options:
         max-size: "1m"
@@ -67,6 +66,9 @@ services:
       ports: "8080"
     networks:
       - backend
+    depends_on:
+      - db
+      - nginx
 
 networks:
   frontend:
