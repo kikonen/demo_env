@@ -23,7 +23,7 @@ services:
       - host_bundle:/bundle
       - host_node_modules:/node_modules
     tmpfs:
-      - /pids:mode=7777,size=1k,uid=1000,gid=100
+      - /pids:mode=7777,size=1k,uid=${DOCKER_UID},gid=${DOCKER_GID}
 
   db:
     env_file:
