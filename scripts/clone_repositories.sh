@@ -4,7 +4,7 @@ export DOCKER_ENV=base
 . $(realpath $(dirname $0))/base_env.sh
 
 REPOSITORIES="host"
-echo "REPOSITORIES: $REPOSITORIES"
+echo "CLONE REPOSITORIES: $REPOSITORIES"
 
 echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     REPO_DIR="${PROJECTS_DIR}/${REPO}"

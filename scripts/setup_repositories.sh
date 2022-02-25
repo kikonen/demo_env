@@ -5,17 +5,17 @@ if [[ $SCRIPT_DIR == "" ]]; then
 fi
 
 REPOSITORIES=$(ls $PROJECTS_DIR)
-echo "REPOSITORIES: $REPOSITORIES"
+echo "SETUP REPOSITORIES: $REPOSITORIES"
 
 echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     REPO_DIR="${PROJECTS_DIR}/${REPO}"
     SERVICE_DIR="${ROOT_DIR}/${REPO}-service"
 
-    echo $SERVICE_DIR
+#    echo $SERVICE_DIR
 
     cp -a $SERVICE_DIR/* $REPO_DIR
     cp -a $SERVICE_DIR/.dockerignore $REPO_DIR
     cp -a $SERVICE_DIR/.yarnrc $REPO_DIR
 done
 
-ls -al $PROJECTS_DIR
+#ls -al $PROJECTS_DIR

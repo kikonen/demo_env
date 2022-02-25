@@ -3,7 +3,7 @@
 . $(realpath $(dirname $0))/base_env.sh
 
 REPOSITORIES=$(ls $PROJECTS_DIR)
-echo "REPOSITORIES: $REPOSITORIES"
+echo "FETCH REPOSITORIES: $REPOSITORIES"
 
 echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     REPO_DIR="$PROJECTS_DIR/${REPO}"
