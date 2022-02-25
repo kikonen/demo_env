@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-export DIR=`realpath \`dirname $0\``
 export DOCKER_ENV=build
-. $DIR/base_env.sh
+. $(realpath $(dirname $0))/base_env.sh
 
-$DIR/setup_build_info.sh
+$SCRIPT_DIR/setup_build_info.sh
 
 time $DOCKER_COMPOSE build "$@"

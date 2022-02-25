@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-DIR=`realpath \`dirname $0\``
-ROOT_DIR=`dirname $DIR`
+SCRIPT_DIR=$(realpath $(dirname $0))
+ROOT_DIR=$(dirname $SCRIPT_DIR)
 if [[ -f $ROOT_DIR/.env ]]; then
    . $ROOT_DIR/.env
 fi
@@ -19,7 +19,7 @@ if [[ $DOCKER_ENV == "" ]]; then
     DOCKER_ENV=development
 fi
 
-DOCKER_COMPOSE_BASE="docker-compose --project-dir=${ROOT_DIR} --project-name ${BASE_NAME}_${DOCKER_ENV} --env-file .${DOCKER_ENV}_env"
+DOCKER_COMPOSE_BASE="docker-compose --project-dir=${ROOT_DIR} --project-name ${BASE_NAME}_${DOCKER_ENV} --env-file ${ROOT_DIR}/.${DOCKER_ENV}_env"
 
 if [[ $DOCKER_ENV == 'production' ]]; then
     DOCKER_COMPOSE="${DOCKER_COMPOSE_BASE} -f docker-compose.yml -f docker-compose.${DOCKER_ENV}.yml"
@@ -33,11 +33,14 @@ fi
 
 COMPOSE_PROFILES=${DOCKER_ENV}
 
-DOCKER_UID=`id -u`
-DOCKER_GID=`id -g`
+DOCKER_UID=$(id -u)
+DOCKER_GID=$(id -g)
 
 echo "CMD=$DOCKER_COMPOSE"
 
+export ROOT_DIR
+export SCRIPT_DIR
+export PROJECTS_DIR
 export BASE_NAME
 export BUILD_TAG
 export COMPOSE_PROFILES
@@ -45,4 +48,4 @@ export DOCKER_ENV
 export DOCKER_UID
 export DOCKER_GID
 
-$DIR/setup_repositories.sh
+$SCRIPT_DIR/setup_repositories.sh

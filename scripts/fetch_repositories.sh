@@ -1,10 +1,8 @@
-DIR=`dirname $0`
-DIR=`realpath $DIR`
-ROOT_DIR=`dirname $DIR`
+#!/usr/bin/env bash
 
-PROJECTS_DIR="$ROOT_DIR/projects"
+. $(realpath $(dirname $0))/base_env.sh
 
-REPOSITORIES=`ls $PROJECTS_DIR`
+REPOSITORIES=$(ls $PROJECTS_DIR)
 echo "REPOSITORIES: $REPOSITORIES"
 
 echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
@@ -17,4 +15,4 @@ echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     fi
 done
 
-bash -e $DIR/setup_repositories.sh "$@"
+bash -e $SCRIPT_DIR/setup_repositories.sh "$@"

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-export DIR=`realpath \`dirname $0\``
 export DOCKER_ENV=production
-. $DIR/base_env.sh
+. $(realpath $(dirname $0))/base_env.sh
 
 $DOCKER_COMPOSE down "$@"

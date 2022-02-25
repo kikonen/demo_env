@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 resolve_cset() {
-    CSET=`git log --format="%H" -n 1`
+    CSET=$(git log --format="%H" -n 1)
 }
 
 resolve_date() {
-    DATE=`git log -n 1 --date=iso --pretty=format:"%ad"`
+    DATE=$(git log -n 1 --date=iso --pretty=format:"%ad")
 }
 
 resolve_tag() {
-    local tags=`git tag --points-at ${CSET}`
+    local tags=$(git tag --points-at ${CSET})
 #    echo $tags
 
     local has_release
@@ -34,13 +34,13 @@ resolve_tag() {
     fi
 
     if [[ $has_release == 1 && $has_rc == 1 ]]; then
-        local tmp_file=`mktemp /tmp/tags_XXXXX`
+        local tmp_file=$(mktemp /tmp/tags_XXXXX)
         echo "$tags" | tr ' ' '\n' | while read v; do
             if [[ ! "$v" =~ .*rc.* ]]; then
                 echo $v >> $tmp_file
             fi
         done
-        TAG=`sort $tmp_file | uniq | tr "\n" ' ' | cat | awk '{$1=$1;print}'`
+        TAG=$(sort $tmp_file | uniq | tr "\n" ' ' | cat | awk '{$1=$1;print}')
         rm -f $tmp_file
     else
         TAG=$tags
@@ -48,17 +48,17 @@ resolve_tag() {
 }
 
 resolve_branch() {
-    local branches=`git log -1 --pretty=format:"%D" ${CSET}`
+    local branches=$(git log -1 --pretty=format:"%D" ${CSET})
 #    echo $branches
 
-    local tmp_file=`mktemp /tmp/branches_XXXXX`
+    local tmp_file=$(mktemp /tmp/branches_XXXXX)
     local split_branches
     IFS=',' read -ra split_branches <<< "$branches"
     for v in "${split_branches[@]}"; do
-        v=`echo $v | sed -e "s/ //g"`
-        v=`echo $v | sed -e "s/HEAD->//g"`
-        v=`echo $v | sed -e "s/tag:.*//g"`
-        v=`echo $v | sed -e "s/origin\///g"`
+        v=$(echo $v | sed -e "s/ //g")
+        v=$(echo $v | sed -e "s/HEAD->//g")
+        v=$(echo $v | sed -e "s/tag:.*//g")
+        v=$(echo $v | sed -e "s/origin\///g")
 
         if [[ $v != "" ]]; then
 #               echo "[$v]"
@@ -66,7 +66,7 @@ resolve_branch() {
         fi
     done
 
-    BRANCH=`sort $tmp_file | uniq | tr "\n" ' ' | cat | awk '{$1=$1;print}'`
+    BRANCH=$(sort $tmp_file | uniq | tr "\n" ' ' | cat | awk '{$1=$1;print}')
 
     rm -f $tmp_file
 }

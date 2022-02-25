@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-DIR=`realpath \`dirname $0\``
-. $DIR/base_env.sh
+. $(realpath $(dirname $0))/base_env.sh
 
 CONTAINER=$1
 SERVER_MODE=debug $DOCKER_COMPOSE up -d $CONTAINER

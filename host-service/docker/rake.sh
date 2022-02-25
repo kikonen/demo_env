@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-IR=`dirname $0`
-DIR=`realpath $DIR`
-ROOT_DIR=`dirname $DIR`
-DOCKER_DIR=`realpath "$ROOT_DIR/../.."`
+SCRIPT_DIR=$(realpath $(dirname $0))/../../../scripts
 CONTAINER=host
 
-$DOCKER_DIR/scripts/rails_rake.sh $CONTAINER "$@"
+$SCRIPT_DIR/rails_rake $CONTAINER "$@"

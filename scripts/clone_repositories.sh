@@ -1,15 +1,14 @@
-DIR=`dirname $0`
-DIR=`realpath $DIR`
-ROOT_DIR=`dirname $DIR`
+#!/usr/bin/env bash
 
-PROJECTS_DIR="$ROOT_DIR/projects"
+export DOCKER_ENV=base
+. $(realpath $(dirname $0))/base_env.sh
 
 REPOSITORIES="host"
 echo "REPOSITORIES: $REPOSITORIES"
 
 echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
-    REPO_DIR="$PROJECTS_DIR/${REPO}"
-    SERVICE_DIR="$ROOT_DIR/${REPO}-service"
+    REPO_DIR="${PROJECTS_DIR}/${REPO}"
+    SERVICE_DIR="${ROOT_DIR}/${REPO}-service"
 
     if [[ ! -d $REPO_DIR ]]; then
         echo "CLONE: $REPO"
@@ -20,4 +19,4 @@ echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     fi
 done
 
-bash -e $DIR/setup_repositories.sh "$@"
+bash -e $SCRIPT_DIR/setup_repositories.sh "$@"

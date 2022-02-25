@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-export DIR=`realpath \`dirname $0\``
 export DOCKER_ENV=development
-. $DIR/base_env.sh
+. $(realpath $(dirname $0))/base_env.sh
 
 time $DOCKER_COMPOSE build \
-     --build-arg DOCKER_UID=`id -u` \
-     --build-arg DOCKER_GID=`id -g`  "$@"
+     --build-arg DOCKER_UID=$DOCKER_UID \
+     --build-arg DOCKER_GID=$DOCKER_GID "$@"
