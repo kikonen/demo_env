@@ -3,7 +3,7 @@
 . $(realpath $(dirname $0))/base_env.sh
 
 CONTAINER=$1
-SERVER_MODE=debug $DOCKER_COMPOSE up -d $CONTAINER
+SERVICE_MODE=debug $DOCKER_COMPOSE up -d $CONTAINER
 
 shift
 $DOCKER_COMPOSE exec $CONTAINER bash -c "bundle check || bundle install"

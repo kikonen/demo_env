@@ -19,7 +19,7 @@ services:
     container_name: ${BASE_NAME}_${DOCKER_ENV}_host
     environment:
       DOCKER_ENV: ${DOCKER_ENV}
-      SERVER_MODE: ${SERVER_MODE}
+      SERVICE_MODE: ${SERVICE_MODE}
     logging:
       options:
         max-size: "1m"

@@ -3,9 +3,9 @@
 #socat TCP-LISTEN:11211,fork TCP:memcached:11211 &
 #socat TCP-LISTEN:6379,fork TCP:redis:6379 &
 
-echo "SERVER_MODE: $SERVER_MODE"
+echo "SERVICE_MODE: $SERVICE_MODE"
 
-if [[ "$SERVER_MODE" == "debug" ]]; then
+if [[ "$SERVICE_MODE" == "debug" ]]; then
     sleep infinity
 else
     bundle check || bundle install
