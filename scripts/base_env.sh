@@ -36,6 +36,9 @@ COMPOSE_PROFILES=${DOCKER_ENV}
 DOCKER_UID=$(id -u)
 DOCKER_GID=$(id -g)
 
+DOCKER_USER=$(id -un)
+DOCKER_GROUP=$(id -gn)
+
 echo "CMD=$DOCKER_COMPOSE"
 
 export ROOT_DIR
@@ -45,7 +48,11 @@ export BASE_NAME
 export BUILD_TAG
 export COMPOSE_PROFILES
 export DOCKER_ENV
+
 export DOCKER_UID
 export DOCKER_GID
+
+export DOCKER_USER
+export DOCKER_GROUP
 
 $SCRIPT_DIR/setup_repositories.sh

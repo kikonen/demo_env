@@ -4,8 +4,11 @@ WORKDIR /app
 
 ARG DOCKER_USER=docker \
     DOCKER_PW=password \
-    DOCKER_UID=-1 \
-    DOCKER_GID=-1
+    DOCKER_UID \
+    DOCKER_GID
+
+RUN test -n "$DOCKER_UID" && \
+    test -n "$DOCKER_GID"
 
 ####################
 # http://blog.siami.fr/diving-in-rails-the-request-handling

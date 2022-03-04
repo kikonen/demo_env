@@ -10,6 +10,9 @@ services:
     build:
       context: ./projects/host
       dockerfile: Dockerfile
+      args:
+        DOCKER_UID: ${DOCKER_UID}
+        DOCKER_GID: ${DOCKER_GID}
     env_file:
       - .env
       - .development_env
@@ -22,6 +25,7 @@ services:
       - host_assets:/app/public/assets
       - host_bundle:/bundle
       - host_node_modules:/node_modules
+      - host_tmp:/app/tmp
     tmpfs:
       - /pids:mode=7777,size=1k,uid=${DOCKER_UID},gid=${DOCKER_GID}
 
@@ -42,6 +46,7 @@ volumes:
   host_assets:
   host_bundle:
   host_node_modules:
+  host_tmp:
 
 secrets:
   POSTGRES_PASSWORD:
