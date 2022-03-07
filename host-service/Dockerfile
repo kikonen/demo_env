@@ -55,6 +55,3 @@ USER ${DOCKER_UID}:${DOCKER_GID}
 
 ####################
 ENTRYPOINT ["docker/docker-entrypoint.sh"]
-
-# TODO KI https://ieftimov.com/post/docker-compose-stray-pids-rails-beyond/
-#CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]

@@ -9,4 +9,3 @@ shift
 $DOCKER_COMPOSE exec $CONTAINER bash -c "bundle check || bundle install"
 $DOCKER_COMPOSE exec $CONTAINER bash -c "yarn install"
 $DOCKER_COMPOSE exec $CONTAINER bundle exec rails "$@"
-#$DOCKER_COMPOSE stop $CONTAINER

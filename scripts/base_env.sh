@@ -19,6 +19,11 @@ if [[ $DOCKER_ENV == "" ]]; then
     DOCKER_ENV=development
 fi
 
+if [[ $SERVICE_MODE == "" ]]; then
+    SERVICE_MODE=server
+fi
+
+
 DOCKER_COMPOSE_BASE="docker-compose --project-dir=${ROOT_DIR} --project-name ${BASE_NAME}_${DOCKER_ENV} --env-file ${ROOT_DIR}/.${DOCKER_ENV}_env"
 
 if [[ $DOCKER_ENV == 'production' ]]; then
@@ -48,6 +53,8 @@ export BASE_NAME
 export BUILD_TAG
 export COMPOSE_PROFILES
 export DOCKER_ENV
+
+export SERVICE_MODE
 
 export DOCKER_UID
 export DOCKER_GID
