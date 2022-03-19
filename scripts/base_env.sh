@@ -52,7 +52,9 @@ export PROJECTS_DIR
 export BASE_NAME
 export BUILD_TAG
 export COMPOSE_PROFILES
+
 export DOCKER_ENV
+export DOCKER_REGISTRY_URL
 
 export SERVICE_MODE
 
