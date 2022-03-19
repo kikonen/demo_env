@@ -1,1 +1,2 @@
 BASE_NAME=demo
+DOCKER_REGISTRY_URL=docker.ikari.fi

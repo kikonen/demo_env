@@ -6,7 +6,7 @@ services:
     restart: always
 
   host:
-    image: docker.ikari.fi/demo_build_host:${BUILD_TAG}
+    image: ${DOCKER_REGISTRY_URL}/demo_build_host:${BUILD_TAG}
     env_file:
       - .env
       - .production_env
