@@ -9,6 +9,8 @@ if [[ $BUILD_TAG == "" ]]; then
     exit
 fi
 
+echo "IMAGES: $BUILD_IMAGES"
+
 echo "$BUILD_IMAGES" | tr ' ' '\n' | while read IMAGE; do
     NAME=${BUILD_NAME}_${DOCKER_ENV}_${IMAGE}
 

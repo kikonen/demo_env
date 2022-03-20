@@ -9,6 +9,8 @@ if [[ $BUILD_TAG == "" ]]; then
     exit
 fi
 
+echo "IMAGES: $BUILD_IMAGES"
+
 echo "$BUILD_IMAGES" | tr ' ' '\n' | while read IMAGE; do
     docker image tag ${BUILD_NAME}_${DOCKER_ENV}_${IMAGE} ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_${DOCKER_ENV}_${IMAGE}:latest
     docker image tag ${BUILD_NAME}_${DOCKER_ENV}_${IMAGE} ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_${DOCKER_ENV}_${IMAGE}:${BUILD_TAG}
