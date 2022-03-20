@@ -1,2 +1,4 @@
 BASE_NAME=demo
+BUILD_NAME=demo
+BUILD_IMAGES="host"
 DOCKER_REGISTRY_URL=docker.ikari.fi

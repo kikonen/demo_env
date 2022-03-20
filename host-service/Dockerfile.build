@@ -1,5 +1,5 @@
 ARG BASE_TAG
-FROM ${DOCKER_REGISTRY_URL}/demo_base_host:$BASE_TAG as builder
+FROM ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_base_host:$BASE_TAG as builder
 WORKDIR /app
 
 ####################

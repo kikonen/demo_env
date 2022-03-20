@@ -53,6 +53,8 @@ export BASE_NAME
 export BUILD_TAG
 export COMPOSE_PROFILES
 
+export BUILD_NAME
+export BUILD_IMAGES
 export DOCKER_ENV
 export DOCKER_REGISTRY_URL
 
