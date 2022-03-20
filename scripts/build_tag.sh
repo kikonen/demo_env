@@ -12,8 +12,12 @@ fi
 echo "IMAGES: $BUILD_IMAGES"
 
 echo "$BUILD_IMAGES" | tr ' ' '\n' | while read IMAGE; do
-    docker image tag ${BUILD_NAME}_${DOCKER_ENV}_${IMAGE} ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_${DOCKER_ENV}_${IMAGE}:latest
-    docker image tag ${BUILD_NAME}_${DOCKER_ENV}_${IMAGE} ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_${DOCKER_ENV}_${IMAGE}:${BUILD_TAG}
+    NAME=${BUILD_NAME}_${DOCKER_ENV}_${IMAGE}
+
+    echo "TAG: $NAME"
+
+    docker image tag ${NAME} ${DOCKER_REGISTRY_URL}/${NAME}:latest
+    docker image tag ${NAME} ${DOCKER_REGISTRY_URL}/${NAME}:${BUILD_TAG}
 done
 
 docker image ls | grep ${BUILD_NAME}_${DOCKER_ENV}
