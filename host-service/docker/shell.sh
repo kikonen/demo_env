@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR=$(realpath $(dirname $0))/../../../scripts
-CONTAINER=host
+DIR=`realpath \`dirname $0\``
+ROOT_DIR=`dirname $DIR`
+DOCKER_DIR=`realpath "$ROOT_DIR/.."`
+CONTAINER=schema
 
-$SCRIPT_DIR/rails_shell.sh $CONTAINER "$@"
+$DOCKER_DIR/scripts/container_shell.sh $CONTAINER "$@"
