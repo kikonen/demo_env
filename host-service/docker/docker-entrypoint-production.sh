@@ -1,6 +1,9 @@
 #!/bin/bash
 
-#sudo chown -R docker:users /bundle /node_modules /app/log /app/tmp /app/public
+if [[ $1 != '' ]]; then
+    exec "$@"
+    exit $?
+fi
 
 echo "SERVICE_MODE: $SERVICE_MODE"
 
