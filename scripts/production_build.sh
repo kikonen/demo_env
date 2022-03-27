@@ -5,4 +5,6 @@ export DOCKER_ENV=build
 
 $SCRIPT_DIR/setup_build_info.sh
 
-time $DOCKER_COMPOSE build "$@"
+time $DOCKER_COMPOSE build \
+     --build-arg DOCKER_UID=$DOCKER_UID \
+     --build-arg DOCKER_GID=$DOCKER_GID "$@"
