@@ -1,3 +1,4 @@
+BASE_TAG=
 BASE_NAME=demo
 BUILD_NAME=demo
 BASE_IMAGES="host"
