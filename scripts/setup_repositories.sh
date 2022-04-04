@@ -13,6 +13,7 @@ echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
 
     if [[ ! -d $REPO_DIR ]]; then
         echo "N/A: $REPO_DIR"
+        continue
     fi
 #    echo $SERVICE_DIR
 
