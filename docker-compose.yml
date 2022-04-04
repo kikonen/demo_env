@@ -30,7 +30,6 @@ services:
     networks:
       - backend
     volumes:
-    - host_log:/app/log
     - host_tmp:/app/tmp
     depends_on:
       - db
@@ -76,5 +75,4 @@ networks:
 
 volumes:
   postgres_data:
-  host_log:
   host_tmp:

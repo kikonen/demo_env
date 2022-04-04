@@ -15,6 +15,7 @@ services:
     secrets:
       - HOST_MASTER_KEY
     volumes:
+      - host_log:/app/log
       - ./host-service/docker/webapp.conf:/etc/nginx/sites-enabled/webapp.conf
       - ./host-service/docker/webapp_env.conf:/etc/nginx/main.d/webapp_env.conf
     restart: always
@@ -40,3 +41,6 @@ secrets:
     file: .production_secrets/POSTGRES_USER
   HOST_MASTER_KEY:
     file: .production_secrets/HOST_MASTER_KEY
+
+volumes:
+  host_log:

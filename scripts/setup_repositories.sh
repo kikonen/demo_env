@@ -7,6 +7,8 @@ fi
 REPOSITORIES=$(ls $PROJECTS_DIR)
 echo "SETUP REPOSITORIES: $REPOSITORIES"
 
+LOGS_DIR=$ROOT_DIR/log
+
 echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     if [[ $REPO == "" ]]; then
         continue
@@ -24,6 +26,8 @@ echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     cp -a $SERVICE_DIR/* $REPO_DIR
     cp -a $SERVICE_DIR/.dockerignore $REPO_DIR
     cp -a $SERVICE_DIR/.yarnrc $REPO_DIR
+
+    (cd $LOGS_DIR && rm $REPO && ln -s $REPO_DIR/log $REPO)
 done
 
 #ls -al $PROJECTS_DIR
