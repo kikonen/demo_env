@@ -8,10 +8,14 @@ REPOSITORIES=$(ls $PROJECTS_DIR)
 echo "SETUP REPOSITORIES: $REPOSITORIES"
 
 echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
+    if [[ $REPO == "" ]]; then
+        continue
+    fi
+
     REPO_DIR="${PROJECTS_DIR}/${REPO}"
     SERVICE_DIR="${ROOT_DIR}/${REPO}-service"
 
-    if [[ ! -d $REPO_DIR ]]; then
+    if [[ -d $REPO_DIR ]]; then
         echo "N/A: $REPO_DIR"
         continue
     fi
