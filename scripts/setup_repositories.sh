@@ -11,6 +11,9 @@ echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
     REPO_DIR="${PROJECTS_DIR}/${REPO}"
     SERVICE_DIR="${ROOT_DIR}/${REPO}-service"
 
+    if [[ ! -d $REPO_DIR ]]; then
+        echo "N/A: $REPO_DIR"
+    fi
 #    echo $SERVICE_DIR
 
     cp -a $SERVICE_DIR/* $REPO_DIR
