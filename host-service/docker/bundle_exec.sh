@@ -1,7 +1,5 @@
-DIR=`dirname $0`
-DIR=`realpath $DIR`
-ROOT_DIR=`dirname $DIR`
-DOCKER_DIR=`realpath "$ROOT_DIR/.."`
-CONTAINER=schema
+#!/usr/bin/env bash
+SCRIPT_DIR=$(realpath $(dirname $0)/../../../scripts)
+CONTAINER=host
 
-$DOCKER_DIR/scripts/rails_bundle_exec.sh $CONTAINER rails "$@"
+$SCRIPT_DIR/rails_bundle_exec.sh $CONTAINER rails "$@"
