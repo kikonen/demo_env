@@ -12,10 +12,10 @@ if [[ $BASE_NAME == "" ]]; then
     exit
 fi
 
-echo "DOCKER_ENV=${DOCKER_ENV}"
+#echo "DOCKER_ENV=${DOCKER_ENV}"
 
 if [[ $DOCKER_ENV == "" ]]; then
-    echo "DEFAULT: DOCKER_ENV=development"
+#    echo "DEFAULT: DOCKER_ENV=development"
     DOCKER_ENV=development
 fi
 
@@ -24,7 +24,7 @@ if [[ $SERVICE_MODE == "" ]]; then
 fi
 
 ENV_FILE="${ROOT_DIR}/.${DOCKER_ENV}_env"
-if [[ -f $ROOT_DIR/$ENV_FILE ]]; then
+if [[ -f $ENV_FILE ]]; then
    . $ENV_FILE
 fi
 
@@ -48,7 +48,7 @@ DOCKER_GID=$(id -g)
 DOCKER_USER=$(id -un)
 DOCKER_GROUP=$(id -gn)
 
-echo "CMD=$DOCKER_COMPOSE"
+echo "CMD: $DOCKER_COMPOSE"
 echo "WEB: http://localhost:${NGINX_PORT}"
 
 export ROOT_DIR

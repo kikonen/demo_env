@@ -5,7 +5,7 @@ if [[ $SCRIPT_DIR == "" ]]; then
 fi
 
 PROJECTS=$(ls $PROJECTS_DIR)
-echo "SETUP PROJECTS: $PROJECTS"
+#echo "SETUP PROJECTS: $PROJECTS"
 
 LOGS_DIR=$ROOT_DIR/log
 
