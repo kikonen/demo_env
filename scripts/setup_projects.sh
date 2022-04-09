@@ -27,7 +27,7 @@ echo "$PROJECTS" | tr ' ' '\n' | while read PROJECT; do
     cp -a $SERVICE_DIR/.dockerignore $PROJECT_DIR
     cp -a $SERVICE_DIR/.yarnrc $PROJECT_DIR
 
-    (cd $LOGS_DIR && rm $PROJECT && ln -s $PROJECT_DIR/log $PROJECT)
+    (cd $LOGS_DIR && rm -f $PROJECT && ln -s $PROJECT_DIR/log $PROJECT)
 done
 
 #ls -al $PROJECTS_DIR
