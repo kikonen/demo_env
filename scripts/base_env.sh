@@ -23,8 +23,12 @@ if [[ $SERVICE_MODE == "" ]]; then
     SERVICE_MODE=server
 fi
 
+ENV_FILE="${ROOT_DIR}/.${DOCKER_ENV}_env"
+if [[ -f $ROOT_DIR/$ENV_FILE ]]; then
+   . $ENV_FILE
+fi
 
-DOCKER_COMPOSE_BASE="docker-compose --project-dir=${ROOT_DIR} --project-name ${BASE_NAME}_${DOCKER_ENV} --env-file ${ROOT_DIR}/.${DOCKER_ENV}_env"
+DOCKER_COMPOSE_BASE="docker-compose --project-dir=${ROOT_DIR} --project-name ${BASE_NAME}_${DOCKER_ENV} --env-file ${ENV_FILE}"
 
 if [[ $DOCKER_ENV == 'production' ]]; then
     DOCKER_COMPOSE="${DOCKER_COMPOSE_BASE} -f docker-compose.yml -f docker-compose.${DOCKER_ENV}.yml"
@@ -45,6 +49,7 @@ DOCKER_USER=$(id -un)
 DOCKER_GROUP=$(id -gn)
 
 echo "CMD=$DOCKER_COMPOSE"
+echo "WEB: http://localhost:${NGINX_PORT}"
 
 export ROOT_DIR
 export SCRIPT_DIR
