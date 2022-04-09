@@ -3,14 +3,14 @@
 export DOCKER_ENV=build
 . $(realpath $(dirname $0))/base_env.sh
 
-REPOS=$(ls $PROJECTS_DIR)
+PROJECTS=$(ls $PROJECTS_DIR)
 
 # NOTE KI https://stackoverflow.com/questions/35385962/arrays-in-a-posix-compliant-shell
-echo "$REPOS" | tr ' ' '\n' | while read REPO; do
-    REPO_DIR=$PROJECTS_DIR/$REPO
-    if [[ -d $REPO_DIR ]]; then
-        echo "BUILD_INFO: $REPO_DIR"
-        (cd $REPO_DIR && $SCRIPT_DIR/create_build_info.sh > $REPO_DIR/docker/build_info.json)
-        cat $REPO_DIR/docker/build_info.json
+echo "$PROJECTS" | tr ' ' '\n' | while read PROJECT; do
+    PROJECT_DIR=$PROJECTS_DIR/$PROJECT
+    if [[ -d $PROJECT_DIR ]]; then
+        echo "BUILD_INFO: $PROJECT_DIR"
+        (cd $PROJECT_DIR && $SCRIPT_DIR/create_build_info.sh > $PROJECT_DIR/docker/build_info.json)
+        cat $PROJECT_DIR/docker/build_info.json
     fi
 done

@@ -2,17 +2,17 @@
 
 . $(realpath $(dirname $0))/base_env.sh
 
-REPOSITORIES=$(ls $PROJECTS_DIR)
-echo "FETCH REPOSITORIES: $REPOSITORIES"
+PROJECTS=$(ls $PROJECTS_DIR)
+echo "FETCH PROJECTS: $PROJECTS"
 
-echo "$REPOSITORIES" | tr ' ' '\n' | while read REPO; do
-    REPO_DIR="$PROJECTS_DIR/${REPO}"
-    SERVICE_DIR="$ROOT_DIR/${REPO}-service"
+echo "$PROJECTS" | tr ' ' '\n' | while read PROJECT; do
+    PROJECT_DIR="$PROJECTS_DIR/${PROJECT}"
+    SERVICE_DIR="$ROOT_DIR/${PROJECT}-service"
 
-    if [[ -d $REPO_DIR ]]; then
-        echo "FETCH: $REPO"
-        $(cd $REPO_DIR && git fetch)
+    if [[ -d $PROJECT_DIR ]]; then
+        echo "FETCH: $PROJECT"
+        $(cd $PROJECT_DIR && git fetch)
     fi
 done
 
-bash -e $SCRIPT_DIR/setup_repositories.sh "$@"
+bash -e $SCRIPT_DIR/setup_projects.sh "$@"

@@ -53,6 +53,7 @@ export BASE_NAME
 export BUILD_TAG
 export COMPOSE_PROFILES
 
+export CLONE_PROJECTS
 export BUILD_NAME
 export BUILD_IMAGES
 export DOCKER_ENV
@@ -66,4 +67,4 @@ export DOCKER_GID
 export DOCKER_USER
 export DOCKER_GROUP
 
-$SCRIPT_DIR/setup_repositories.sh
+$SCRIPT_DIR/setup_projects.sh
