@@ -5,7 +5,7 @@ FROM ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_base_host:$BASE_TAG as builder
 WORKDIR /app
 
 ####################
-COPY . .yarnrc . /app/
+COPY . .yarnrc /app/
 
 RUN env && \
     ln -sf /node_modules node_modules && \
