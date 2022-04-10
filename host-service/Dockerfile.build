@@ -9,6 +9,7 @@ COPY . .yarnrc /app/
 
 RUN env && \
     ln -sf /node_modules node_modules && \
+    ln -sf /var/run/secrets/HOST_MASTER_KEY config/master.key && \
     ls -al
 
 RUN yarn install

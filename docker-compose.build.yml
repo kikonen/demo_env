@@ -13,6 +13,8 @@ services:
     env_file:
       - .env
       - .build_env
+    secrets:
+      - HOST_MASTER_KEY
 
   db:
     env_file:

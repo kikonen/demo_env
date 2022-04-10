@@ -76,3 +76,11 @@ networks:
 volumes:
   postgres_data:
   host_tmp:
+
+secrets:
+  POSTGRES_PASSWORD:
+    file: .${DOCKER_ENV}_secrets/POSTGRES_PASSWORD
+  POSTGRES_USER:
+    file: .${DOCKER_ENV}_secrets/POSTGRES_USER
+  HOST_MASTER_KEY:
+    file: .${DOCKER_ENV}_secrets/HOST_MASTER_KEY
