@@ -17,8 +17,6 @@ services:
     volumes:
       - host_log:/home/app/webapp/log
       - host_tmp:/home/app/webapp/tmp
-      - ./host-service/docker/webapp.conf:/etc/nginx/sites-enabled/webapp.conf
-      - ./host-service/docker/webapp_env.conf:/etc/nginx/main.d/webapp_env.conf
     restart: always
 
   db:
