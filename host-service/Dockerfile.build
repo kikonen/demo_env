@@ -20,11 +20,11 @@ RUN rake assets:precompile
 
 ####################
 FROM phusion/passenger-ruby27:2.1.0
-WORKDIR /app
+WORKDIR /home/app/webapp
 
 RUN mkdir -p log && \
     mkdir -p tmp && \
-    chown -R app:app /app
+    chown -R app:app /home/app/webapp
 
 # https://github.com/phusion/passenger-docker
 ENV HOME /root
@@ -34,12 +34,10 @@ ENV RAILS_ENV=production \
     RAILS_SERVE_STATIC_FILES=false \
     RAILS_FORCE_SSL=true \
     SCRIPT_NAME=/ui \
-    RAILS_RELATIVE_URL_ROOT=/ui
+    RAILS_RELATIVE_URL_ROOT=/ui \
+    DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
-ENV BUNDLE_PATH=/bundle/vendor \
-    GEM_HOME=/bundle/vendor/ruby/2.7.0 \
-    GEM_PATH=/bundle/vendor/ruby/2.7.0/bin \
-    PATH=$PATH:/app/bin
+ENV PATH=$PATH:/home/app/webapp/bin
 
 ####################
 # https://github.com/phusion/passenger-docker
@@ -51,11 +49,11 @@ COPY docker/webapp_env.conf /etc/nginx/main.d/webapp_env.conf
 COPY --chown=app:app . .
 COPY --chown=app:app --from=builder /app/public/assets public/assets
 COPY --chown=app:app --from=builder /app/public/packs public/packs
-COPY --chown=app:app --from=builder /bundle /bundle
+COPY --chown=app:app --from=builder /bundle/vendor/ruby/2.7.0/ /usr/local/rvm/gems/ruby-2.7.5@global/
 
 ####################
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends postgresql-client && \
+    apt-get install -y --no-install-recommends libcurl4-openssl-dev postgresql-client && \
     rm -rf /var/lib/apt/lists/*
 
 RUN bundle config set without 'development test deploy' && \
@@ -65,11 +63,17 @@ RUN bundle config set without 'development test deploy' && \
     env && \
     ls -al
 
+RUN chown -R app:app /home/app && \
+    ls -al
+
 ####################
 # https://github.com/phusion/passenger-docker
 RUN rm -f /etc/service/nginx/down && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+####################
+#USER app:app
 
 ####################
 CMD ["/sbin/my_init"]

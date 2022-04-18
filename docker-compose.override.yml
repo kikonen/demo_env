@@ -18,8 +18,6 @@ services:
       - .development_env
     secrets:
       - HOST_MASTER_KEY
-    labels:
-      ports: "3000"
     volumes:
       - ./projects/host:/app
       - host_assets:/app/public/assets

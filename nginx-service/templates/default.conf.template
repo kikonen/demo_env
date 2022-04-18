@@ -46,11 +46,7 @@ server {
         # https://stackoverflow.com/questions/29279084/nginx-proxy-add-x-forwarded-for-and-real-ip-header
         proxy_set_header X-Forwarded-For "$http_x_forwarded_for, $realip_remote_addr";
 
-        # NOTE KI do NOT discard /ui for production (due to passenger)
-        # NOTE KI discard /ui for development
-        if ($docker_env = "development") {
-            rewrite ^\/ui/?(.*)$ /$1 break;
-        }
+        rewrite ^\/ui/?(.*)$ /$1 break;
 
         # https://tarunlalwani.com/post/nginx-proxypass-server-paths/
         proxy_pass http://$upstream_host:3000;
