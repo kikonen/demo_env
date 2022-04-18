@@ -3,7 +3,7 @@ services:
     env_file:
       - .env
       - .production_env
-    restart: always
+    restart: unless-stopped
 
   host:
     image: ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_build_host:${BUILD_TAG}
@@ -17,7 +17,7 @@ services:
     volumes:
       - host_log:/home/app/webapp/log
       - host_tmp:/home/app/webapp/tmp
-    restart: always
+    restart: unless-stopped
 
   db:
     env_file:
@@ -26,7 +26,7 @@ services:
     secrets:
       - POSTGRES_PASSWORD
       - POSTGRES_USER
-    restart: always
+    restart: unless-stopped
 
   adminer:
     env_file:
