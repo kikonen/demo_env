@@ -10,9 +10,14 @@ echo "$PROJECTS" | tr ' ' '\n' | while read PROJECT; do
     SERVICE_DIR="$ROOT_DIR/${PROJECT}-service"
 
     if [[ -d $PROJECT_DIR ]]; then
-        echo "FETCH: $PROJECT"
-        $(cd $PROJECT_DIR && git fetch)
+        BRANCH=$(cd $PROJECT_DIR && git rev-parse --abbrev-ref HEAD)
+
+        echo "----------------------------------------"
+        echo "FETCH: $PROJECT (BRANCH: $BRANCH)"
+
+        (cd $PROJECT_DIR && git fetch "$@")
+        (cd $PROJECT_DIR && git --no-pager log -2)
     fi
 done
 
-bash -e $SCRIPT_DIR/setup_projects.sh "$@"
+bash -e $SCRIPT_DIR/setup_projects.sh
