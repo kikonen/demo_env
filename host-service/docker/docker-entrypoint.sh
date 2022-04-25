@@ -3,6 +3,8 @@
 #socat TCP-LISTEN:11211,fork TCP:memcached:11211 &
 #socat TCP-LISTEN:6379,fork TCP:redis:6379 &
 
+ln -sf /var/run/secrets/HOST_MASTER_KEY config/master.key
+
 if [[ $1 != '' ]]; then
     exec "$@"
     exit $?
