@@ -6,7 +6,7 @@ Experimenting with strategies with building and deploying rails app as container
 
 ## Setup
 ```bash
-scripts/clone_repositories.sh
+scripts/git_clone.sh
 ```
 
 ## Setup development env
