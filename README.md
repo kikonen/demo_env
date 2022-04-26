@@ -4,6 +4,32 @@ Experimenting with strategies with building and deploying rails app as container
 
 # Environment
 
+## Install docker-compose with Docker BuildKit support
+
+### New
+- https://docs.docker.com/compose/cli-command/#installing-compose-v2
+
+```bash
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+mkdir -p $DOCKER_CONFIG/cli-plugins
+curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+```
+
+### OLD
+- https://www.cloudsavvyit.com/10623/how-to-install-docker-and-docker-compose-on-linux/
+- https://github.com/docker/compose/releases
+
+```bash
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64" -o /tmp/docker-compose
+sudo chmod +x /tmp/docker-compose
+ls -al /tmp/docker-compose
+/tmp/docker-compose --version
+#sudo mv /tmp/docker-compose /usr/local/bin
+docker-compose --version
+```
+
+
 ## Setup
 ```bash
 scripts/git_clone.sh
@@ -104,6 +130,9 @@ BUILD_TAG=latest scripts/production_up.sh
 - https://github.com/firewalld/firewalld/issues/461
 - https://docs.docker.com/network/iptables/
 - https://docs.docker.com/compose/production/
+- https://stackoverflow.com/questions/58592259/how-do-you-enable-buildkit-with-docker-compose
+- https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information
+
 
 ## Bash
 - https://stackoverflow.com/questions/35385962/arrays-in-a-posix-compliant-shell
