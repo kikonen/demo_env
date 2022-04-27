@@ -20,6 +20,8 @@ services:
       - host_log:/home/app/webapp/log
       - host_tmp:/home/app/webapp/tmp
     restart: unless-stopped
+    tmpfs:
+      - /pids:mode=7777,size=1k,uid=app,gid=app
 
   db:
     env_file:

@@ -1,43 +1,44 @@
 ARG DOCKER_REGISTRY_URL
 ARG BUILD_NAME
 ARG BASE_TAG
-FROM ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_base_host:$BASE_TAG as builder
-WORKDIR /app
+FROM ${DOCKER_REGISTRY_URL}/${BUILD_NAME}_base_host:$BASE_TAG
+ARG HOST_MASTER_KEY
 
-####################
-COPY . .yarnrc /app/
-
-RUN env && \
-    ln -sf /node_modules node_modules && \
-    ls -al
-
-RUN yarn install
-
-RUN bundle config set without 'development test' && \
-    bundle install
-
-RUN rake assets:precompile
-
-####################
-FROM phusion/passenger-ruby27:2.1.0
 WORKDIR /home/app/webapp
 
-RUN mkdir -p log && \
-    mkdir -p tmp && \
-    chown -R app:app /home/app/webapp
-
-# https://github.com/phusion/passenger-docker
-ENV HOME /root
-
+####################
 # http://blog.siami.fr/diving-in-rails-the-request-handling
-ENV RAILS_ENV=production \
-    RAILS_SERVE_STATIC_FILES=false \
-    RAILS_FORCE_SSL=true \
-    SCRIPT_NAME=/ui \
+# NOTE KI base_url must be set *BEFORE* assets:precompile
+ENV SCRIPT_NAME=/ui \
     RAILS_RELATIVE_URL_ROOT=/ui \
-    DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+    PIDFILE=/pids/server.pid
 
-ENV PATH=$PATH:/home/app/webapp/bin
+ENV PATH=$PATH:/home/app/webapp/node_modules/.bin \
+    PATH=$PATH:/home/app/webapp/bin \
+    EDITOR=vim
+
+####################
+RUN mkdir -p log && \
+    mkdir -p tmp
+
+RUN chown -R app:app /home/app/webapp
+
+####################
+COPY --chown=app:app . .
+
+#     RAILS_GROUPS="deploy" RAILS_MASTER_KEY="$HOST_MASTER_KEY" rails webpacker:install && \
+
+RUN yarn install && \
+    bundle config set without 'development:test' && \
+    RAILS_GROUPS="deploy" bundle install && \
+    ls -al && \
+    ls -al node_modules/.bin && \
+    ls -al /home/app/webapp/bin && \
+    echo "$PATH" && \
+    which webpack && \
+    RAILS_GROUPS="deploy" RAILS_MASTER_KEY="$HOST_MASTER_KEY" rake assets:precompile && \
+    bundle config set without 'development:test:deploy' && \
+    rm -fr tmp/* log/* node_modules
 
 ####################
 # https://github.com/phusion/passenger-docker
@@ -46,31 +47,22 @@ COPY docker/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY docker/webapp_env.conf /etc/nginx/main.d/webapp_env.conf
 
 ####################
-COPY --chown=app:app . .
-COPY --chown=app:app --from=builder /app/public/assets public/assets
-COPY --chown=app:app --from=builder /app/public/packs public/packs
-COPY --chown=app:app --from=builder /bundle/vendor/ruby/2.7.0/ /usr/local/rvm/gems/ruby-2.7.5@global/
-
-####################
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends libcurl4-openssl-dev postgresql-client && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN bundle config set without 'development test deploy' && \
-    bundle install && \
-    rm -fr vendor && \
+RUN rm -fr vendor && \
     ln -sf /var/run/secrets/HOST_MASTER_KEY config/master.key && \
+    chown -R app:app /home/app && \
     env && \
-    ls -al
-
-RUN chown -R app:app /home/app && \
     ls -al
 
 ####################
 # https://github.com/phusion/passenger-docker
 RUN rm -f /etc/service/nginx/down && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* tmp/* log/*
+
+####################
+ENV RAILS_SERVE_STATIC_FILES=false \
+    RAILS_FORCE_SSL=true \
+    DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
 ####################
 #USER app:app

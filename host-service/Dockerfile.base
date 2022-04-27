@@ -1,39 +1,43 @@
 FROM phusion/passenger-ruby27:2.1.0
-WORKDIR /app
-
-ENV RAILS_ENV=production \
-    RAILS_GROUPS="deploy" \
-    SCRIPT_NAME=/ui \
-    RAILS_RELATIVE_URL_ROOT=/ui
-
-ENV BUNDLE_PATH=/bundle/vendor \
-    GEM_HOME=/bundle/vendor/ruby/2.7.0 \
-    GEM_PATH=/bundle/vendor/ruby/2.7.0/bin \
-    NODE_PATH=/node_modules \
-    PATH=$PATH:/app/bin:/node_modules/.bin
+WORKDIR /home/app/webapp
 
 ####################
-RUN mkdir -p /node_modules
+ENV RAILS_ENV=production \
+    PIDFILE=/pids/server.pid
 
+# https://github.com/phusion/passenger-docker
+ENV HOME=/home/app/webapp
+
+ENV PATH=$PATH:/home/app/webapp/node_modules/.bin \
+    PATH=$PATH:/home/app/webapp/bin \
+    EDITOR=vim
+
+####################
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
     apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
     apt-get install -y --no-install-recommends libcurl4-openssl-dev libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN npm install --global yarn
+    apt-get install -y --no-install-recommends postgresql-client grep less vim && \
+    npm install --global yarn && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get clean
 
 ####################
-COPY Gemfile Gemfile.lock \
-    package.json yarn.lock .yarnrc \
-    /app/
+RUN mkdir -p log && \
+    mkdir -p tmp
 
-RUN yarn install
+RUN chown -R app:app /home/app/webapp
 
-RUN bundle config set without 'development test'
-RUN bundle install
+####################
+COPY --chown=app:app Gemfile Gemfile.lock /home/app/webapp/
+COPY --chown=app:app package.json yarn.lock .yarnrc /home/app/webapp/
+
+# NOTE KI node_modules can be *HUGE*
+#RUN yarn install
+
+RUN bundle config set without 'development:test' && \
+    RAILS_GROUPS="deploy" bundle install
 
 RUN rm -fr Gemfile* package* yarn* .yarnrc .bundle && \
-    ln -sf /node_modules node_modules && \
     pwd && \
     ls -al

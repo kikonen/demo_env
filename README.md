@@ -132,7 +132,9 @@ BUILD_TAG=latest scripts/production_up.sh
 - https://docs.docker.com/compose/production/
 - https://stackoverflow.com/questions/58592259/how-do-you-enable-buildkit-with-docker-compose
 - https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information
-
+- https://discourse.world/h/2020/05/12/Secure-secrets-when-building-in-Docker-Compose
+- https://github.com/docker/compose/pull/7046
+- https://github.com/docker/compose/pull/9386
 
 ## Bash
 - https://stackoverflow.com/questions/35385962/arrays-in-a-posix-compliant-shell
