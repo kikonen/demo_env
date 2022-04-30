@@ -21,7 +21,7 @@ services:
       - host_tmp:/home/app/webapp/tmp
     restart: unless-stopped
     tmpfs:
-      - /pids:mode=7777,size=1k,uid=app,gid=app
+      - /pids:mode=7777,size=1k,uid=9999,gid=999
 
   db:
     env_file:

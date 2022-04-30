@@ -2,7 +2,7 @@
 
 if [[ $BASE_ENV_INCLUDED == 1 ]]; then
     #echo "$0 already included"
-    exit
+    return
 fi
 export BASE_ENV_INCLUDED=1
 
