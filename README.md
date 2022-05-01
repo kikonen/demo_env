@@ -135,6 +135,7 @@ BUILD_TAG=latest scripts/production_up.sh
 - https://discourse.world/h/2020/05/12/Secure-secrets-when-building-in-Docker-Compose
 - https://github.com/docker/compose/pull/7046
 - https://github.com/docker/compose/pull/9386
+- https://willschenk.com/articles/2020/rails_in_docker/
 
 ## Bash
 - https://stackoverflow.com/questions/35385962/arrays-in-a-posix-compliant-shell

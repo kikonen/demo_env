@@ -3,6 +3,7 @@ FROM ruby:2.7.5
 WORKDIR /app
 
 ARG DOCKER_USER=docker \
+    DOCKER_GROUP=docker \
     DOCKER_PW=password \
     DOCKER_UID \
     DOCKER_GID
@@ -17,17 +18,15 @@ ENV RAILS_ENV=development \
     RAILS_RELATIVE_URL_ROOT=/ui \
     PIDFILE=/pids/server.pid
 
-ENV BUNDLE_PATH=/bundle/vendor \
-    GEM_HOME=/bundle/vendor/ruby/2.7.0 \
-    GEM_PATH=/bundle/vendor/ruby/2.7.0/bin \
-    PATH=$PATH:/app/node_modules/.bin \
+ENV PATH=$PATH:/app/node_modules/.bin \
     PATH=$PATH:/app/bin \
     EDITOR=vim
 
 ####################
 # NOTE KI CREATE dis for mounted volume permissions
-RUN mkdir -p /bundle && \
+RUN mkdir -p /usr/local/bundle && \
     mkdir -p /app/public/assets && \
+    mkdir -p /app/node_modules && \
     mkdir -p /app/log && \
     mkdir -p /app/tmp
 
@@ -41,14 +40,13 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
 RUN npm install --global yarn
 
 ####################
-RUN echo "useradd -m ${DOCKER_USER} --uid=${DOCKER_UID} --gid=${DOCKER_GID}"
-RUN useradd -m ${DOCKER_USER} --uid=${DOCKER_UID} --gid=${DOCKER_GID} && \
-    echo "${DOCKER_USER}:${DOCKER_PW}" | chpasswd
+RUN (grep -q -E ":${DOCKER_GID}:" /etc/group) || addgroup --gid ${DOCKER_GID} ${DOCKER_GROUP}
+RUN adduser --disabled-password --gecos '' --uid ${DOCKER_UID} --gid ${DOCKER_GID} ${DOCKER_USER}
 
 RUN echo "docker ALL=(ALL:ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/docker
 
 # NOTE KI Permissions WILL be applied to mounted volumes
-RUN chown -R ${DOCKER_UID}:${DOCKER_GID} /bundle /app
+RUN chown -R ${DOCKER_UID}:${DOCKER_GID} /usr/local/bundle /app
 
 USER ${DOCKER_UID}:${DOCKER_GID}
 
