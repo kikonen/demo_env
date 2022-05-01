@@ -13,6 +13,7 @@ services:
       args:
         DOCKER_UID: ${DOCKER_UID}
         DOCKER_GID: ${DOCKER_GID}
+        APP_PATH: /ui
     env_file:
       - .env
       - .development_env

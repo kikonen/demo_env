@@ -6,7 +6,8 @@ ARG DOCKER_USER=docker \
     DOCKER_GROUP=docker \
     DOCKER_PW=password \
     DOCKER_UID \
-    DOCKER_GID
+    DOCKER_GID \
+    APP_PATH
 
 RUN test -n "$DOCKER_UID" && \
     test -n "$DOCKER_GID"
@@ -14,8 +15,8 @@ RUN test -n "$DOCKER_UID" && \
 ####################
 # http://blog.siami.fr/diving-in-rails-the-request-handling
 ENV RAILS_ENV=development \
-    SCRIPT_NAME=/ui \
-    RAILS_RELATIVE_URL_ROOT=/ui \
+    SCRIPT_NAME=$APP_PATH \
+    RAILS_RELATIVE_URL_ROOT=$APP_PATH \
     PIDFILE=/pids/server.pid
 
 ENV PATH=$PATH:/app/node_modules/.bin \

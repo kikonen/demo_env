@@ -9,8 +9,8 @@ WORKDIR /home/app/webapp
 ####################
 # http://blog.siami.fr/diving-in-rails-the-request-handling
 # NOTE KI base_url must be set *BEFORE* assets:precompile
-ENV SCRIPT_NAME=/ui \
-    RAILS_RELATIVE_URL_ROOT=/ui \
+ENV SCRIPT_NAME=$APP_PATH \
+    RAILS_RELATIVE_URL_ROOT=$APP_PATH \
     PIDFILE=/pids/server.pid
 
 ENV PATH=$PATH:/home/app/webapp/node_modules/.bin \

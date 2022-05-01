@@ -10,6 +10,8 @@ services:
     build:
       context: ./projects/host
       dockerfile: Dockerfile.build
+      args:
+        APP_PATH: /ui
     env_file:
       - .env
       - .build_env
