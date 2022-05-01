@@ -2,8 +2,7 @@ FROM phusion/passenger-ruby27:2.1.0
 WORKDIR /home/app/webapp
 
 ####################
-ENV RAILS_ENV=production \
-    PIDFILE=/pids/server.pid
+ENV RAILS_ENV=production
 
 # https://github.com/phusion/passenger-docker
 ENV HOME=/home/app/webapp
@@ -30,7 +29,7 @@ RUN chown -R app:app /home/app/webapp
 
 ####################
 COPY --chown=app:app Gemfile Gemfile.lock /home/app/webapp/
-COPY --chown=app:app package.json yarn.lock .yarnrc /home/app/webapp/
+#COPY --chown=app:app package.json yarn.lock .yarnrc /home/app/webapp/
 
 # NOTE KI node_modules can be *HUGE*
 #RUN yarn install
@@ -38,6 +37,4 @@ COPY --chown=app:app package.json yarn.lock .yarnrc /home/app/webapp/
 RUN bundle config set without 'development:test' && \
     RAILS_GROUPS="deploy" bundle install
 
-RUN rm -fr Gemfile* package* yarn* .yarnrc .bundle && \
-    pwd && \
-    ls -al
+RUN rm -fr Gemfile* package* yarn* .yarnrc .bundle

@@ -13,32 +13,18 @@ ENV SCRIPT_NAME=$APP_PATH \
     RAILS_RELATIVE_URL_ROOT=$APP_PATH \
     PIDFILE=/pids/server.pid
 
-ENV PATH=$PATH:/home/app/webapp/node_modules/.bin \
-    PATH=$PATH:/home/app/webapp/bin \
-    EDITOR=vim
-
 ####################
-RUN mkdir -p log && \
-    mkdir -p tmp
-
 RUN chown -R app:app /home/app/webapp
 
 ####################
 COPY --chown=app:app . .
 
-#     RAILS_GROUPS="deploy" RAILS_MASTER_KEY="$HOST_MASTER_KEY" rails webpacker:install && \
-
 RUN yarn install && \
     bundle config set without 'development:test' && \
     RAILS_GROUPS="deploy" bundle install && \
-    ls -al && \
-    ls -al node_modules/.bin && \
-    ls -al /home/app/webapp/bin && \
-    echo "$PATH" && \
-    which webpack && \
     RAILS_GROUPS="deploy" RAILS_MASTER_KEY="$HOST_MASTER_KEY" rake assets:precompile && \
     bundle config set without 'development:test:deploy' && \
-    rm -fr tmp/* log/* node_modules
+    rm -fr tmp/* log/* node_modules vendor
 
 ####################
 # https://github.com/phusion/passenger-docker
@@ -47,11 +33,8 @@ COPY docker/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY docker/webapp_env.conf /etc/nginx/main.d/webapp_env.conf
 
 ####################
-RUN rm -fr vendor && \
-    ln -sf /var/run/secrets/HOST_MASTER_KEY config/master.key && \
-    chown -R app:app /home/app && \
-    env && \
-    ls -al
+RUN ln -sf /var/run/secrets/HOST_MASTER_KEY config/master.key && \
+    chown -R app:app /home/app
 
 ####################
 # https://github.com/phusion/passenger-docker
