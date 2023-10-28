@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby27:2.1.0
+FROM phusion/passenger-ruby32:2.1.0
 WORKDIR /home/app/webapp
 
 ####################
