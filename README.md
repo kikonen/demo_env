@@ -48,8 +48,10 @@ cp _development_env .development_env
 ```bash
 scripts/development_up.sh
 docker exec -it demo_development_host bash
+# in docker container
 rake db:create
 rake db:migrate
+#exit
 ```
 
 ## Run development
@@ -108,8 +110,10 @@ cp _production_env .production_env
 ```bash
 scripts/production_up.sh
 docker exec -it demo_production_host bash
+# in docker container
 rake db:create
 rake db:migrate
+#exit
 ```
 
 ## Run production
